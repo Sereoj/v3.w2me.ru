@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\UI\EditProfileController;
+use App\Http\Controllers\UI\ProfileController;
+use App\Http\Controllers\UI\ThumbnailsController;
 use Illuminate\Support\Facades\Route;
 
 /*
