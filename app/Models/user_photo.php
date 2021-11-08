@@ -29,5 +29,4 @@ class user_photo extends Model
 
     public $timestamps = true;
     protected $table = "user_photo";
-    protected $fillable = ['id','user_id','path'];
 }

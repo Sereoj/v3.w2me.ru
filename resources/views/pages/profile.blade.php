@@ -10,12 +10,12 @@
                 </div>
                 <div class="col col-xl-8 col-md-6 col-lg-6">
                     <p class="lead">Имя: {{ $user->name }}</p>
-{{--                    <p class="lead">Роль: {{ $user->role->role }}</p>--}}
-{{--                    <p class="lead">Тип аккаунта: {{ $user->type->type }}</p>--}}
-{{--                    <p class="lead">Ваш баланс: {{ $user->type->cost }}</p>--}}
+                    <p class="lead">Роль: {{ $role->role }}</p>
+                    <p class="lead">Тип аккаунта: {{ $type->type }}</p>
+                    <p class="lead">Ваш баланс: {{ $type->cost }}</p>
                     <p class="lead">Дата создания аккаунта: {{ $user->created_at }}</p>
-                    @if ($status)
-                    <div class="alert alert-danger" role="alert">Подтвердите email</div>
+                    @if ($status != true)
+                    <div class="alert alert-danger" role="alert">Подтвердите email: <a href="{{$user->sendEmailVerificationNotification()}}">{{$user->email}}</a>Нажми на Email, чтобы отправить письмо</div>
                     @endif
                 </div>
         </div>

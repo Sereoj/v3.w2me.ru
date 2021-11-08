@@ -28,6 +28,6 @@ class user_type extends Model
     use HasFactory;
 
     protected $table = 'user_type';
-    protected $fillable = ['id', 'user_id', 'type', 'gift_time', 'cost'];
+    protected $fillable = ['type'];
     public $timestamps = false;
 }

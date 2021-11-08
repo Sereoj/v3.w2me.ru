@@ -22,6 +22,6 @@ class user_role extends Model
     use HasFactory;
 
     protected $table = 'user_role';
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['role'];
     public $timestamps = false;
 }
