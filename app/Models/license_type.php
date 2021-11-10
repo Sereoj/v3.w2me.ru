@@ -29,5 +29,5 @@ class license_type extends Model
     //id	type
 
     protected $table = 'license_type';
-    protected $fillable = ['id', 'type'];
+    protected $fillable = ['id', 'type','catalog_id','cost','currency'];
 }

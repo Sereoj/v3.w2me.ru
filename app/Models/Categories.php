@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Categories query()
  * @method static \Illuminate\Database\Eloquent\Builder|Categories whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Categories whereName($value)
- * @mixin \Eloquentphp artisan ide-helper:meta
+ * @mixin \Eloquent php artisan ide-helper:meta
  */
 class Categories extends Model
 {

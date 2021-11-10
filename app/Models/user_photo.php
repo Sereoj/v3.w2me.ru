@@ -28,5 +28,6 @@ class user_photo extends Model
     use HasFactory;
 
     public $timestamps = true;
+    protected $fillable = ['path','user_id','id'];
     protected $table = "user_photo";
 }
