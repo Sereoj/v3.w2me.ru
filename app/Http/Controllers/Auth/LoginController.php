@@ -55,6 +55,7 @@ class LoginController extends Controller
             'password.required' => 'Обязательное поле',
             'password.string' => 'Принимает только строку',
             'password.min' => 'Минимальное количество символов 8',
+            'auth.failed' => 'Ошибка входа. Возможно введен неверный пароль'
         ];
     }
 }
