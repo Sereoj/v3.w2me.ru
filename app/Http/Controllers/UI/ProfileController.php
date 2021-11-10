@@ -32,6 +32,13 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-        return redirect()->route('user.edit');
+        if($request->edit)
+            return redirect()->route('user.edit');
+        if($request->send)
+        {
+            $request->user()->sendEmailVerificationNotification();
+            return back();
+        }
+
     }
 }

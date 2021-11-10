@@ -50,12 +50,30 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string','alpha', 'max:255','min:4'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ], $this->messages());
     }
-
+    protected function messages()
+    {
+        return [
+            'name.required' => 'Поле имя обязательное',
+            'name.alpha' => 'Данное поле должно состоять полностью из букв',
+            'name.string' => 'Данное поле должно содержать строку',
+            'name.max' => 'Максимальное количество символов 255',
+            'name.min' => 'Минимальное количество символов 4',
+            'email.required' => 'Поле email обязательное',
+            'email.email' => 'Данное поле принимает только email',
+            'email.string' => 'Данное поле должно быть строкой',
+            'email.max' => 'Максимальное количество символов 255',
+            'email.unique' => 'Данный email уже существует',
+            'password.required' => 'Обязательное поле',
+            'password.string' => 'Принимает только строку',
+            'password.min' => 'Минимальное количество символов 8',
+            'password.confirmed' => 'Подтвердите пароль правильно',
+        ];
+    }
     /**
      * Create a new user instance after a valid registration.
      *

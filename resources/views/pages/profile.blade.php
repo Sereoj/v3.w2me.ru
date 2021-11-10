@@ -15,7 +15,11 @@
                     <p class="lead">Ваш баланс: {{ $type->cost }}</p>
                     <p class="lead">Дата создания аккаунта: {{ $user->created_at }}</p>
                     @if ($status != true)
-                    <div class="alert alert-danger" role="alert">Подтвердите email: <a href="{{$user->sendEmailVerificationNotification()}}">{{$user->email}}</a>Нажми на Email, чтобы отправить письмо</div>
+                        <form method="POST">
+                            @csrf
+                            <div class="alert alert-danger" role="alert">Подтвердите email: {{$user->getEmailForVerification()}}</div>
+                            <button class="btn btn-primary btn-sm" name="send" value="true">Отправить</button>
+                        </form>
                     @endif
                 </div>
         </div>
