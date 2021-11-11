@@ -30,7 +30,7 @@ class UserController extends Controller
 
         return [
             'user' => $user->name,
-            'action' => 'delete',
+            'action' => 'deleted',
             'status' => 'success'
         ];
     }
