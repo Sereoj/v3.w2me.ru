@@ -33,20 +33,36 @@ class UsersSeeder extends Seeder
         //updated_at
 
         DB::table('users')->insert(
-        [
-            'id' => 1,
-            'name' => 'admin',
-            'email' => 'admin@w2me.ru',
-            'email_verified_at' => null,
-            'password' => Hash::make('admin'),
-            'favorite_themes' => serialize([1, 3, 5]),
-            'install_themes' => serialize([1,5]),
-            'lang' => 'ru',
-            'api_token' => '',
-            'remember_token' => '',
-            'created_at' => Carbon::today(),
-            'updated_at' => Carbon::today(),
-        ]
+            [
+                [
+                    'id' => 1,
+                    'name' => 'admin',
+                    'email' => 'admin@w2me.ru',
+                    'email_verified_at' => null,
+                    'password' => Hash::make('admin'),
+                    'favorite_themes' => serialize([1, 3, 5]),
+                    'install_themes' => serialize([1,5]),
+                    'lang' => 'ru',
+                    'api_token' => '',
+                    'remember_token' => '',
+                    'created_at' => Carbon::today(),
+                    'updated_at' => Carbon::today(),
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'moderator',
+                    'email' => 'moderator@w2me.ru',
+                    'email_verified_at' => Carbon::today(),
+                    'password' => Hash::make('moderator'),
+                    'favorite_themes' => serialize([1, 3, 5]),
+                    'install_themes' => serialize([1,5]),
+                    'lang' => 'ru',
+                    'api_token' => '',
+                    'remember_token' => '',
+                    'created_at' => Carbon::today(),
+                    'updated_at' => Carbon::today(),
+                ],
+            ]
         );
     }
 }
