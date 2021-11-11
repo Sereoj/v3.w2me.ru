@@ -34,6 +34,8 @@
                     @endif
                     @if($status)
                     <div class="alert alert-success" role="alert">Успешно изменен пароль</div>
+                    @else
+                    <div class="alert alert-danger" role="alert">Введен неверно старый пароль</div>
                     @endif
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-primary" type="submit">Сохранить</button>
