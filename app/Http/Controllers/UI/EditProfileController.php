@@ -58,9 +58,15 @@ class EditProfileController extends Controller
             $args['status_image'] = true;
         }
 
-        if($this->isPasswords($request))
+        if($this->isPasswords($request)) // true
         {
-            $args['status'] = $this->Password($user, $request->old_password, $request->new_password);
+            if($this->Password($user, $request->old_password, $request->new_password))
+            {
+                $args['status'] = 'true';
+            }else
+            {
+                $args['status'] = 'error';
+            }
         }
 
         $user->save();
@@ -71,19 +77,17 @@ class EditProfileController extends Controller
     {
         return $request->name ?? null;
     }
-
     protected function ChangeName(User $user, $text)
     {
         $user->name = $text;
     }
-
     protected function isPhoto($request)
     {
         return $request->photo ?? null;
     }
     protected function isPasswords($request)
     {
-        if($request->old_password && $request->new_password)
+        if($request->old_password != null && $request->new_password != null)
             return true;
         return false;
     }
@@ -119,8 +123,8 @@ class EditProfileController extends Controller
             'photo'  =>  'nullable|image|mimes:jpeg,jpg,png,gif|max:1027',
 //            'old_password'  =>  'nullable|min:0|max:255',
 //            'new_password'  =>  'nullable|min:0|max:255',
-            'old_password'  =>  'nullable|min:8|max:255',
-            'new_password'  =>  'nullable|min:8|max:255',
+            'old_password'  =>  'nullable|min:0|max:255',
+            'new_password'  =>  'nullable|min:0|max:255',
         ], $this->messages());
     }
     protected function messages()

@@ -32,9 +32,9 @@
                     @if($status_image)
                         <div class="alert alert-success" role="alert">Изображение загружено на сервер</div>
                     @endif
-                    @if($status)
+                    @if($status == 'true')
                     <div class="alert alert-success" role="alert">Успешно изменен пароль</div>
-                    @else
+                    @elseif($status == 'error')
                     <div class="alert alert-danger" role="alert">Введен неверно старый пароль</div>
                     @endif
                     <div class="d-flex justify-content-end">
