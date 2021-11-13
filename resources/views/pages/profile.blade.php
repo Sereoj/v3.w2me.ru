@@ -10,9 +10,9 @@
                 </div>
                 <div class="col col-xl-8 col-md-6 col-lg-6">
                     <p class="lead">Имя: {{ $user->name }}</p>
-                    <p class="lead">Роль: {{ $role->role }}</p>
-                    <p class="lead">Тип аккаунта: {{ $type->type }}</p>
-                    <p class="lead">Ваш баланс: {{ $type->cost }}</p>
+                    <p class="lead">Роль: {{ __("messages.$role->role") }}</p>
+                    <p class="lead">Тип аккаунта: {{ __("messages.user_type.$type->type") }}</p>
+                    <p class="lead">Ваш баланс: {{ __('messages.balance',['cost' => number_format($type->cost)]) }}</p>
                     <p class="lead">Дата создания аккаунта: {{ $user->created_at }}</p>
                     @if ($status != true)
                         <form method="POST">
