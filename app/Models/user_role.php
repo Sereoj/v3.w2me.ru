@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|user_role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|user_role whereName($value)
  * @mixin \Eloquent
+ * @property int $user_id
+ * @property string $role
+ * @method static \Illuminate\Database\Eloquent\Builder|user_role whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|user_role whereUserId($value)
  */
 class user_role extends Model
 {
