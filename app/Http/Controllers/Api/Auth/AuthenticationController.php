@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -44,7 +45,7 @@ class AuthenticationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string','alpha', 'max:255','min:4'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email:rfc,dns', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], $this->registerMessages());
 
@@ -61,6 +62,7 @@ class AuthenticationController extends Controller
             $user->role()->create([
                 'role' => 'user'
             ]);
+
             return $user;
         }
         return $validator->messages();
