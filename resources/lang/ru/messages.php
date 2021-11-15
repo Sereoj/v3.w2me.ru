@@ -12,5 +12,9 @@ return [
 
     'user_type.free' => 'Бесплатный',
     'user_type.pay' => 'Платный, действует до:',
-    'balance' => ":cost руб."
+    'balance' => ":cost руб.",
+    'category' => ":Category",
+    'license.pay' => 'Платно',
+    'license.free' => 'Бесплатно',
+    'username' => ':Name'
 ];
