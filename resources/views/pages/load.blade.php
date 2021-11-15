@@ -19,8 +19,8 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>0</td>
-{{--                        <td>{{ $item->download[0]->count_download }}</td>--}}
+{{--                        <td>0</td>--}}
+                        <td>{{ $item->download[0]->count_download ?? '0' }}</td>
                         <td>
                             <button type="submit" class="btn btn-primary" name="change" value="{{ $item->id }}">Изменить</button>
                             <button type="submit" class="btn btn-danger" name="delete" value="{{ $item->id }}">Удалить</button>
