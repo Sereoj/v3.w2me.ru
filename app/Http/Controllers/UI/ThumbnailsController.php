@@ -95,26 +95,14 @@ class ThumbnailsController extends Controller
         }
         if(isset($request->change))
         {
-            return view('pages.item.edit', ['content' => view('pages.load', ['header' => 'Изменение коллекции'])]);
+            $id = (int)$request->change;
+            $catalog = new CatalogResource(Catalog::whereId($id)->first());
+
+            return view('layouts.app', ['content' => view('pages.item.edit', ['catalog' => $catalog,'header' => 'Изменение коллекции'])]);
         }
         if(isset($request->add))
         {
-            return view('pages.item.edit', ['content' => view('pages.load', ['header' => 'Создание коллекции'])]);
+            return view('layouts.app', ['content' => view('pages.item.add', ['header' => 'Создание коллекции'])]);
         }
-    }
-
-    public function index_simple($slug = null)
-    {
-        if($slug != null)
-        {
-            $name = str_replace('-', ' ',$slug);
-            $image = new CatalogResource(Catalog::where('name', $name)->first());
-
-            return view('layouts.app', ['content' => view('pages.simple', [
-                'image' => $image,
-                'url' => Route::currentRouteName() != 'index' ? Route::current()->uri . '/images/' : Route::current()->domain().'/images/'
-            ])]);
-        }
-        return false;
     }
 }

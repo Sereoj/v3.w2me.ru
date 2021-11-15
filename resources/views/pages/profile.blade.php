@@ -2,10 +2,12 @@
         <div class="row gy-4">
             <h2>{{ $header ?? '' }}</h2>
                 <div class="col col-xl-2 col-md-4 col-lg-3">
-                    <img src="{{$image}}" class="img-profile rounded float-start">
-                    <form method="POST">
+                    <div class="photo">
+                        <img src="{{$image}}" class="profile">
+                    </div>
+                    <form class="d-flex" method="POST">
                         @csrf
-                        <button class="btn btn-primary mx-4" name="edit" value="true">Редактировать</button>
+                        <button class="btn btn-primary mx-auto" name="edit" value="true">Редактировать</button>
                     </form>
                 </div>
                 <div class="col col-xl-8 col-md-6 col-lg-6">

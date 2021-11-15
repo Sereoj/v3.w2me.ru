@@ -41,22 +41,46 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+                    <hr class="my-2">
+                    <div class="badge rounded-pill bg-primary">Аниме</div>
+                    <div class="badge rounded-pill bg-primary">Фильм</div>
+                    <div class="badge rounded-pill bg-primary">Макото Синкай</div>
+                    <div class="badge rounded-pill bg-primary">Романтика</div>
+                    <div class="badge rounded-pill bg-primary">Повседневность</div>
+                    <div class="badge rounded-pill bg-primary">Сверхестественное</div>
                 </div>
-                <div class="col-xl-4 py-4 p-4">
+                <div class="col-xl-4 py-2 p-4">
                     <h2>{{ $image->name }}</h2>
                     <h4>Описание</h4>
                     <p>
                         {{ $image->description }}
                     </p>
-                    <div class="small-ratings">
-                        <i class="bi bi-star-fill rating-color"></i>
-                        <i class="bi bi-star-fill rating-color"></i>
-                        <i class="bi bi-star-fill rating-color"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
+{{--                        <div class="photo-1">--}}
+{{--                            <img class="profile" src="{{ $image->user->photo->path }}" alt="">--}}
+{{--                        </div>--}}
+{{--                        <div class="col">--}}
+{{--                            <p class="mx-2 my-3">{{ $image->user->name ?? '' }}</p>--}}
+{{--                        </div>--}}
+                    <div class="row d-flex">
+                        <p class="ms-2"><span class="badge bg-primary">Разместил:</span> {{ __("messages.username", ['name' => $image->user->name ?? ''])}}</p>
+                        <p class="ms-2"><span class="badge bg-primary">Категория:</span> {{__("messages.category", ['category' => $image->category->name ?? ''])}}</p>
+                        <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{ __("messages.license.".$image->license->type)}}</p>
+{{--                        <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{  }}</p>--}}
+{{--                        <div class="small-ratings">--}}
+{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+{{--                            <i class="bi bi-star"></i>--}}
+{{--                            <i class="bi bi-star"></i>--}}
+{{--                        </div>--}}
+
+                        <p class="ms-2"><span class="badge bg-primary">Просмотров:</span>  11</p>
+                        <p class="ms-2"><span class="badge bg-primary">Размер:</span> {{ $image->download[0]->size ?? '' }} Mb</p>
+                        <p class="ms-2"><span class="badge bg-primary">Загрузок:</span> {{ $image->download[0]->count_download ?? '' }}</p>
+
+                        <button type="button" class="btn btn-primary">Установить (.zip)</button>
+                        <button type="button" class="btn btn-primary">Открыть в приложении</button>
                     </div>
-                    <button type="button" class="btn btn-primary">Установить (.zip)</button>
-                    <button type="button" class="btn btn-primary">Открыть в приложении</button>
                 </div>
         </div>
 @endsection

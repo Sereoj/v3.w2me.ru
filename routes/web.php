@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UI\EditProfileController;
 use App\Http\Controllers\UI\ProfileController;
+use App\Http\Controllers\UI\SimplePageController;
 use App\Http\Controllers\UI\ThumbnailsController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::name('images.')->group(
         Route::get('/catalog/popular',[ThumbnailsController::class, 'index_popular'])->name('popular');
         Route::get('/catalog/wait',[ThumbnailsController::class, 'index_wait'])->name('wait');
 
-        Route::get('/catalog/{slug}',[ThumbnailsController::class, 'index_simple'])->name('simple');
+        Route::get('/catalog/{slug}',[SimplePageController::class, 'index'])->name('simple');
 
         Route::middleware('auth:web')->group(function (){
             //gets
@@ -66,3 +67,15 @@ Route::name('user.')->group(
         });
     }
 );
+
+Route::get('/call', function () {
+    Artisan::call('storage:link');
+});
+
+Route::get('/sergios', function () {
+    return view('layouts.app', ['content' => view('pages.errors.not-found')]);
+});
+
+//Route::get('/sergios1', function () {
+//    return view('layouts.app', ['content' => view('pages.errors.not-found')]);
+//});
