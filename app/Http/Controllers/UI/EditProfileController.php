@@ -4,11 +4,13 @@ namespace App\Http\Controllers\UI;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class EditProfileController extends Controller
 {
@@ -53,8 +55,17 @@ class EditProfileController extends Controller
 
         if($this->isPhoto($request))
         {
-            $path = '/storage/'.$request->photo->store('/','public');
-            $this->createPhoto($user, $path);
+            $path = Storage::putFileAs(
+                'users', $request->file('photo'), Str::slug($request->user()->id.' '.$request->user()->name).'.'.$request->file('photo')->extension()
+            );
+
+            $this->createPhoto($request, $path,600);
+
+            $path = Storage::putFileAs(
+                'users/60x60', $request->file('photo'), Str::slug($request->user()->id.' '.$request->user()->name).'60x60.'.$request->file('photo')->extension()
+            );
+
+            $this->createPhoto($request, $path,60);
             $args['status_image'] = true;
         }
 
@@ -111,9 +122,14 @@ class EditProfileController extends Controller
         return false;
     }
 
-    protected function createPhoto($user, $path)
+    protected function createPhoto($request, $path, $size, $name = null)
     {
-      return $user->photo()->create(['path' => asset($path)]);
+        Image::make($path)->resize($size,null,function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->save($name);
+
+        $request->user()->photo()->create(['path' => asset($path)]);
     }
 
     protected function validator(array $data)
