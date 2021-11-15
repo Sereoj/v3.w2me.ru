@@ -18,7 +18,7 @@ class CatalogResource extends JsonResource
             'images' => $this->images,
             'category' => $this->category,
             'license' => $this->license,
-            'user' => $this->user->name,
+            'user' => new UserResource($this->user),
             'download' => CatalogDownloadResource::collection($this->download),
             'rating' => $this->rating,
         ];
