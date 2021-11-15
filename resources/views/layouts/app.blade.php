@@ -51,9 +51,26 @@
         margin-top: 10px;
     }
 
-    .img-profile{
-        height: 200px;
+    .photo {
         width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    .photo-1 {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+    .profile {
+        width: auto;
+        height: 100%;
+        margin: 0 auto;
     }
 </style>
 @include('layouts.nav')
