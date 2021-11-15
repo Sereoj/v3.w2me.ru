@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\Auth\UserController;
+use App\Http\Controllers\Api\WallpaperListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[AuthenticationController::class,'register']);
 Route::post('/login',[AuthenticationController::class,'login']);
+
+Route::get('/wallpapers', [WallpaperListController::class, 'getAllWallpapers']);
+Route::get('/wallpapers/load/{id}', [WallpaperListController::class, 'getLoadWallpapers']);
+Route::get('/wallpapers/{id}', [WallpaperListController::class, 'getOneWallpaper']);
 
 Route::middleware('api')->group(function (){
     Route::get('/users', [UserController::class, 'index']);
