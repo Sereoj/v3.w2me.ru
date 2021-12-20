@@ -34,7 +34,7 @@ class catalog_download extends Model
     //id	size	links	count_download	created_at	updated_at
     protected $table = 'catalog_download';
     public $timestamps = false;
-    protected $fillable = ['id', 'catalog_id', 'size', 'count_download'];
+    protected $fillable = ['id', 'catalog_id', 'size', 'count_download','links'];
 
     public function links()
     {

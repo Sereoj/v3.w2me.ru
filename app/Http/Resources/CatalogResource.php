@@ -11,16 +11,9 @@ class CatalogResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
             'meta_title' => $this->meta_title,
             'meta_description' => $this->meta_description,
             'preview' => $this->preview,
-            'images' => $this->images,
-            'category' => $this->category,
-            'license' => $this->license,
-            'user' => new UserResource($this->user),
-            'download' => CatalogDownloadResource::collection($this->download),
-            'rating' => $this->rating,
         ];
     }
 }

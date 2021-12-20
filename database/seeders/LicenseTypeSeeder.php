@@ -50,6 +50,41 @@ class LicenseTypeSeeder extends Seeder
                 'currency' => 'USD',
                 'type' => 'free',
             ],
+            [
+                'id' => 6,
+                'catalog_id' => 6,
+                'cost' => '',
+                'currency' => 'USD',
+                'type' => 'free',
+            ],
+            [
+                'id' => 7,
+                'catalog_id' => 7,
+                'cost' => '',
+                'currency' => 'USD',
+                'type' => 'free',
+            ],
+            [
+                'id' => 8,
+                'catalog_id' => 8,
+                'cost' => '',
+                'currency' => 'USD',
+                'type' => 'free',
+            ],
+            [
+                'id' => 9,
+                'catalog_id' => 9,
+                'cost' => '',
+                'currency' => 'USD',
+                'type' => 'free',
+            ],
+            [
+                'id' => 10,
+                'catalog_id' => 10,
+                'cost' => '',
+                'currency' => 'USD',
+                'type' => 'free',
+            ],
         ]);
     }
 }

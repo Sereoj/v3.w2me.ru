@@ -13,13 +13,43 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $values = ['windows', 'mac', 'linux', 'other'];
-
-        foreach ($values as $item)
-        {
-            \DB::table('categories')->insert(
-                ['name' => $item]
-            );
-        }
+        \DB::table('categories')->insert([
+            [
+                "id" => 1,
+                "Name" => 'Природа',
+                'description' => '',
+                'meta_name' => '',
+                'meta_description' => '',
+                'Icon' => '',
+                'Tag' => 'wallpapers'
+            ],
+            [
+                "id" => 2,
+                "Name" => 'Космос',
+                'description' => '',
+                'meta_name' => '',
+                'meta_description' => '',
+                'Icon' => '',
+                'Tag' => 'wallpapers'
+            ],
+            [
+                "id" => 3,
+                "Name" => 'Города',
+                'description' => '',
+                'meta_name' => '',
+                'meta_description' => '',
+                'Icon' => '',
+                'Tag' => 'wallpapers'
+            ],
+            [
+                "id" => 4,
+                "Name" => 'Иллюстрация',
+                'description' => '',
+                'meta_name' => '',
+                'meta_description' => '',
+                'Icon' => '',
+                'Tag' => 'wallpapers'
+            ]
+        ]);
     }
 }

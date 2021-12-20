@@ -47,7 +47,36 @@ class CatalogDownloadSeeder extends Seeder
                     'size' => 0,
                     'count_download' => 100,
                 ],
-
+                [
+                    'id' => 6,
+                    'catalog_id' => 6,
+                    'size' => 0,
+                    'count_download' => 100,
+                ],
+                [
+                    'id' => 7,
+                    'catalog_id' => 7,
+                    'size' => 0,
+                    'count_download' => 100,
+                ],
+                [
+                    'id' => 8,
+                    'catalog_id' => 8,
+                    'size' => 0,
+                    'count_download' => 100,
+                ],
+                [
+                    'id' => 9,
+                    'catalog_id' => 9,
+                    'size' => 0,
+                    'count_download' => 100,
+                ],
+                [
+                    'id' => 10,
+                    'catalog_id' => 10,
+                    'size' => 0,
+                    'count_download' => 100,
+                ],
             ]
         );
     }

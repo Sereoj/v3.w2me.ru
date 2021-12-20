@@ -3,7 +3,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">Главная</a></li>
-                    <li class="breadcrumb-item"><a href="{{  route('images.new') }}">Каталог</a></li>
+                    <li class="breadcrumb-item"><a href="{{  route('images.catalog') }}">Каталог</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{$image->name}}</li>
                 </ol>
             </nav>
@@ -62,24 +62,36 @@
 {{--                            <p class="mx-2 my-3">{{ $image->user->name ?? '' }}</p>--}}
 {{--                        </div>--}}
                     <div class="row d-flex">
-                        <p class="ms-2"><span class="badge bg-primary">Разместил:</span> {{ __("messages.username", ['name' => $image->user->name ?? ''])}}</p>
-                        <p class="ms-2"><span class="badge bg-primary">Категория:</span> {{__("messages.category", ['category' => $image->category->name ?? ''])}}</p>
-                        <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{ __("messages.license.".$image->license->type)}}</p>
-{{--                        <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{  }}</p>--}}
-{{--                        <div class="small-ratings">--}}
-{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
-{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
-{{--                            <i class="bi bi-star-fill rating-color"></i>--}}
-{{--                            <i class="bi bi-star"></i>--}}
-{{--                            <i class="bi bi-star"></i>--}}
-{{--                        </div>--}}
+                        <form method="POST">
+                            @csrf
+                            <p class="ms-2"><span class="badge bg-primary">Разместил:</span> {{ __("messages.username", ['name' => $image->user->name ?? ''])}}</p>
+                            <p class="ms-2"><span class="badge bg-primary">Категория:</span> {{__("messages.category", ['category' => $image->category->name ?? ''])}}</p>
+                            <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{ __("messages.license.".$image->license->type)}}</p>
+                            {{--                        <p class="ms-2"><span class="badge bg-primary">Стоимость:</span> {{  }}</p>--}}
+                            {{--                        <div class="small-ratings">--}}
+                            {{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+                            {{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+                            {{--                            <i class="bi bi-star-fill rating-color"></i>--}}
+                            {{--                            <i class="bi bi-star"></i>--}}
+                            {{--                            <i class="bi bi-star"></i>--}}
+                            {{--                        </div>--}}
 
-                        <p class="ms-2"><span class="badge bg-primary">Просмотров:</span>  11</p>
-                        <p class="ms-2"><span class="badge bg-primary">Размер:</span> {{ $image->download[0]->size ?? '' }} Mb</p>
-                        <p class="ms-2"><span class="badge bg-primary">Загрузок:</span> {{ $image->download[0]->count_download ?? '' }}</p>
+                            <p class="ms-2"><span class="badge bg-primary">Просмотров:</span>  11</p>
+                            <p class="ms-2"><span class="badge bg-primary">Размер:</span> {{ $image->download[0]->size ?? '' }} Mb</p>
+                            <p class="ms-2"><span class="badge bg-primary">Загрузок:</span> {{ $image->download[0]->count_download ?? '' }}</p>
+                            @if($favorite == false)
+                            <button class="btn btn-primary" name="favorite" value="{{ $id ?? '0' }}"><i class="bi bi-bookmark"></i> Избранные</button>
+                                @else
+                            <button class="btn btn-success" name="unset" value="{{ $id ?? '0' }}"><i class="bi bi-bookmark-check"></i> Избранные</button>
+                            @endif
+                            @if($save == false)
+                            <button class="btn btn-primary" name="save" value="{{ $id ?? '0' }}"><i class="bi bi-plus-circle"></i> Сохранить</button>
+                                @else
+                            <button class="btn btn-danger" name="delete" value="{{ $id ?? '0' }}">Удалить</button>
+                            @endif
+                            <button class="btn btn-primary" name="download" value="{{ $id ?? '0' }}"><i class="bi bi-cloud-download"></i> Скачать</button>
 
-                        <button type="button" class="btn btn-primary">Установить (.zip)</button>
-                        <button type="button" class="btn btn-primary">Открыть в приложении</button>
+                        </form>
                     </div>
                 </div>
         </div>

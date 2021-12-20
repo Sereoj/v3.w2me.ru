@@ -35,14 +35,22 @@ Route::get('/',[ThumbnailsController::class, 'index'])->name('index');
 Route::name('images.')->group(
     function ()
     {
+        Route::get('/categories',[ThumbnailsController::class, 'index'])->name('catalog');
+        Route::get('/{category}/catalog',[ThumbnailsController::class, 'index'])->name('category');
+
+        Route::get('/catalog',[ThumbnailsController::class, 'index'])->name('catalog');
+
         Route::get('/catalog/new',[ThumbnailsController::class, 'index_new'])->name('new');
         Route::get('/catalog/popular',[ThumbnailsController::class, 'index_popular'])->name('popular');
         Route::get('/catalog/wait',[ThumbnailsController::class, 'index_wait'])->name('wait');
 
         Route::get('/catalog/{slug}',[SimplePageController::class, 'index'])->name('simple');
+        Route::post('/catalog/{slug}',[SimplePageController::class, 'store']);
 
         Route::middleware('auth:web')->group(function (){
             //gets
+            Route::get('/catalog/download/{id}',[SimplePageController::class, 'index'])->name('download');
+
             Route::get('/favorite',[ThumbnailsController::class, 'index_favorite'])->name('favorite');
             Route::get('/install',[ThumbnailsController::class, 'index_install'])->name('install');
             Route::get('/load',[ThumbnailsController::class, 'index_load'])->name('load');
@@ -71,11 +79,3 @@ Route::name('user.')->group(
 Route::get('/call', function () {
     Artisan::call('storage:link');
 });
-
-Route::get('/sergios', function () {
-    return view('layouts.app', ['content' => view('pages.errors.not-found')]);
-});
-
-//Route::get('/sergios1', function () {
-//    return view('layouts.app', ['content' => view('pages.errors.not-found')]);
-//});

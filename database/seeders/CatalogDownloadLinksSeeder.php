@@ -44,6 +44,36 @@ class CatalogDownloadLinksSeeder extends Seeder
                 'link_0' => 'https://w2me.ru/download/5',
                 'link_1' => 'https://w2me.ru/download/5',
                 'link_2'=> 'https://w2me.ru/download/5'
+            ],
+            [
+                'catalog_download_id' => 6,
+                'link_0' => 'https://w2me.ru/download/5',
+                'link_1' => 'https://w2me.ru/download/5',
+                'link_2'=> 'https://w2me.ru/download/5'
+            ],
+            [
+                'catalog_download_id' => 7,
+                'link_0' => 'https://w2me.ru/download/5',
+                'link_1' => 'https://w2me.ru/download/5',
+                'link_2'=> 'https://w2me.ru/download/5'
+            ],
+            [
+                'catalog_download_id' => 8,
+                'link_0' => 'https://w2me.ru/download/5',
+                'link_1' => 'https://w2me.ru/download/5',
+                'link_2'=> 'https://w2me.ru/download/5'
+            ],
+            [
+                'catalog_download_id' => 9,
+                'link_0' => 'https://w2me.ru/download/5',
+                'link_1' => 'https://w2me.ru/download/5',
+                'link_2'=> 'https://w2me.ru/download/5'
+            ],
+            [
+                'catalog_download_id' => 10,
+                'link_0' => 'https://w2me.ru/download/5',
+                'link_1' => 'https://w2me.ru/download/5',
+                'link_2'=> 'https://w2me.ru/download/5'
             ]
         ]);
     }

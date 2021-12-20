@@ -19,23 +19,23 @@ class ThumbnailsController extends Controller
 
     public function index()
     {
-        $images = Catalog::all();
+        $images = Catalog::all()->where('isActive');
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images])]);
     }
 
     public function index_new()
     {
-        $images = Catalog::orderBy('id','desc')->take(10)->get();
+        $images = Catalog::orderBy('id','desc')->get()->where('isActive');
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Новые изображения'])]);
     }
     public function index_popular()
     {
-        $images = Catalog::all();
+        $images = Catalog::orderBy('views','desc')->get()->where('isActive');
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Популярные изображения'])]);
     }
     public function index_wait()
     {
-        $images = Catalog::all();
+        $images = Catalog::all()->where('isActive',false);
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Ожидающие изображения'])]);
     }
 

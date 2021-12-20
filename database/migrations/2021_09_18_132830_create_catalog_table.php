@@ -13,13 +13,23 @@ class CreateCatalogTable extends Migration
      */
     public function up()
     {
-        /*
-         * id: 1
-         * Name: Windows
-         */
+        Schema::create('brands', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('meta_name')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('tag')->nullable();
+        });
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('meta_name')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('tag')->nullable();
         });
         Schema::create('catalog', function (Blueprint $table) {
             $table->id();
@@ -27,10 +37,14 @@ class CreateCatalogTable extends Migration
             $table->longText('description')->nullable();
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
+            $table->integer('views')->default(0);
+            $table->integer('like')->default(0);
             $table->string('preview')->nullable();
             $table->longText('images')->nullable();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); // Кто загрузил
+            $table->boolean('isActive')->default(false);
         });
 
         Schema::create('license_type', function (Blueprint $table) {
@@ -38,13 +52,13 @@ class CreateCatalogTable extends Migration
             $table->foreignId('catalog_id')->constrained('catalog')->cascadeOnDelete();
             $table->string('cost')->nullable();
             $table->enum('currency', ['RUB', 'USD', 'EUR'])->nullable();
-            $table->enum('type', ['free', 'pay']);
+            $table->enum('type', ['free', 'pay'])->nullable();
         });
 
         Schema::create('catalog_download', function (Blueprint $table) {
             $table->id();
             $table->foreignId('catalog_id')->constrained('catalog')->cascadeOnDelete();
-            $table->string('size')->nullable();
+            $table->string('size')->nullable()->default('0');
             $table->integer('count_download')->default('0');
         });
 
@@ -75,6 +89,7 @@ class CreateCatalogTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('brands');
         Schema::dropIfExists('license_type');
         Schema::dropIfExists('catalog');
         Schema::dropIfExists('catalog_download');

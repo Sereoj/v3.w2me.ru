@@ -35,7 +35,7 @@ class AuthenticationController extends Controller
             {
                 $user->api_token = Str::random(32);
                 $user->save();
-                return [new UserResource($user), 'token' => $user->api_token];
+                return ['token' => $user->api_token];
             }
             return $this->sendFailedLoginResponse($request);
         }
@@ -62,8 +62,9 @@ class AuthenticationController extends Controller
             $user->role()->create([
                 'role' => 'user'
             ]);
-
-            return $user;
+            $user->api_token = Str::random(32);
+            $user->save();
+            return ['token' => $user->api_token];
         }
         return $validator->messages();
     }

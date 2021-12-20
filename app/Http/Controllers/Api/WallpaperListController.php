@@ -10,20 +10,24 @@ use Illuminate\Http\Request;
 
 class WallpaperListController extends Controller
 {
-    public function getAllWallpapers(Request $request)
+    public function getAllWallpapers()
     {
-        return CatalogResource::collection(Catalog::all());
+        return CatalogResource::collection(Catalog::all()->where('isActive'));
     }
 
-    public function getOneWallpaper($nameOrId)
+    public function getNewWallpaper()
     {
-        if(is_numeric($nameOrId))
-            return Catalog::find($nameOrId);
-        else
-        {
-            $str = str_replace(["_", "+", "-"], " ", $nameOrId);
-            return CatalogResource::collection(Catalog::where(['name' => $str])->get());
-        }
+        return CatalogResource::collection(Catalog::orderBy('id','desc')->get()->where('isActive'));
+    }
+
+    public function getPopularWallpaper()
+    {
+        return CatalogResource::collection(Catalog::orderBy('views','desc')->get()->where('isActive'));
+    }
+
+    public function getWaitWallpaper()
+    {
+        return CatalogResource::collection(Catalog::all()->where('isActive',false));
     }
 
     public function getLoadWallpapers($user_id)
@@ -32,6 +36,5 @@ class WallpaperListController extends Controller
 
         if($user != null)
             return Catalog::find($user)->all();
-        return $user;
     }
 }
