@@ -26,7 +26,7 @@ Route::post('/login',[AuthenticationController::class,'login']);
 
 Route::get('/wallpapers', [WallpaperListController::class, 'getAllWallpapers']);
 Route::get('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'index']);
-Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'store']);
+Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'update']);
 Route::get('/wallpapers/new', [WallpaperListController::class, 'getNewWallpaper']);
 Route::get('/wallpapers/new/{id}', [WallpaperListController::class, 'getOneNewWallpaper']);
 Route::get('/wallpapers/popular', [WallpaperListController::class, 'getPopularWallpaper']);

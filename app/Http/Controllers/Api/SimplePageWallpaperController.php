@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CatalogResource;
+use App\Http\Resources\SimplePageResource;
 use App\Models\Catalog;
 use Illuminate\Http\Request;
 
@@ -12,11 +13,11 @@ class SimplePageWallpaperController extends Controller
     public function index($nameOrId)
     {
         if(is_numeric($nameOrId))
-            return Catalog::find($nameOrId);
+            return SimplePageResource::collection(Catalog::whereId($nameOrId)->get());
         else
         {
             $str = str_replace(["_", "+", "-"], " ", $nameOrId);
-            return CatalogResource::collection(Catalog::where("name", $str)->get());
+            return SimplePageResource::collection(Catalog::whereName($str)->get());
         }
     }
 
@@ -26,7 +27,7 @@ class SimplePageWallpaperController extends Controller
 
         if(is_numeric($id))
         {
-            return Catalog::find($id)->update($fields)->save();
+            return Catalog::whereId($id)->update($fields)->save();
         }
         return [];
     }
