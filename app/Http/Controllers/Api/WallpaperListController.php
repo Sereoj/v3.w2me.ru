@@ -7,6 +7,7 @@ use App\Http\Resources\CatalogResource;
 use App\Models\Catalog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WallpaperListController extends Controller
 {
@@ -30,11 +31,12 @@ class WallpaperListController extends Controller
         return CatalogResource::collection(Catalog::all()->where('isActive',false));
     }
 
-    public function getLoadWallpapers($user_id)
+    public function getFavoriteWallpaper($user_id)
     {
-        $user = User::find($user_id);
-
-        if($user != null)
-            return Catalog::find($user)->all();
+        return User::whereId($user_id)->get();
+    }
+    public function getLoadWallpaper($user_id)
+    {
+        return CatalogResource::collection(Catalog::whereUserId($user_id)->get()); // get catalogs
     }
 }

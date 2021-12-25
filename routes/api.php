@@ -28,32 +28,27 @@ Route::get('/wallpapers', [WallpaperListController::class, 'getAllWallpapers']);
 Route::get('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'index']);
 Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'update']);
 Route::get('/wallpapers/new', [WallpaperListController::class, 'getNewWallpaper']);
-Route::get('/wallpapers/new/{id}', [WallpaperListController::class, 'getOneNewWallpaper']);
 Route::get('/wallpapers/popular', [WallpaperListController::class, 'getPopularWallpaper']);
-Route::get('/wallpapers/popular/{id}', [WallpaperListController::class, 'getOnePopularWallpaper']);
 Route::get('/wallpapers/wait', [WallpaperListController::class, 'getWaitWallpaper']);
-Route::get('/wallpapers/wait/{id}', [WallpaperListController::class, 'getOneWaitWallpaper']);
-Route::get('/wallpapers/{id}/load', [WallpaperListController::class, 'getLoadWallpaper']);
-Route::get('/wallpapers/{id}/install', [WallpaperListController::class, 'getInstallWallpaper']);
 
-Route::middleware('api')->group(function (){
+Route::middleware('auth:api')->group(function () {
+    Route::get('/wallpapers/favorite/{user}', [WallpaperListController::class, 'getFavoriteWallpaper']);
+    Route::get('/wallpapers/install/{user}', [WallpaperListController::class, 'getInstallWallpaper']);
+    Route::get('/wallpapers/load/{user}', [WallpaperListController::class, 'getLoadWallpaper']);
+
+    Route::post('/wallpapers', [WallpaperListController::class, 'SetOneWallpaper']);
+
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
-});
 
-
-Route::get('/wallpapers/add', function ()
-{
-    return "auth";
+    Route::post('/categories', [CategoriesListController::class, 'addCategory']);
+    Route::post('/brands', [BrandsListController::class, 'getBrands']);
 });
-Route::post('/wallpapers/add', [WallpaperListController::class, 'SetOneWallpaper']);
 
 Route::get('/brands', [BrandsListController::class, 'getBrands']);
 Route::get('/brands/{id}', [BrandsListController::class, 'getBrand']);
-Route::post('/brands', [BrandsListController::class, 'getBrands']);
 
 Route::get('/categories', [CategoriesListController::class, 'getCategories']);
 Route::get('/categories/{id}', [CategoriesListController::class, 'getCategory']);
-Route::post('/categories', [CategoriesListController::class, 'addCategory']);
