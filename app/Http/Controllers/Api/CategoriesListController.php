@@ -21,16 +21,20 @@ class CategoriesListController extends Controller
             return "null";
     }
 
-    public function addCategory(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $value = $request->only('name');
+        return Categories::create($request->only('name','icon', 'tag'));
+    }
 
-        if(!empty($value))
-        {
-            if(Categories::whereName($value)->get() != $value)
-            {
-                return Categories::create($request->only('name','icon', 'tag'));
-            }
-        }
+    public function update(Categories $categories, Request $request)
+    {
+        $categories->update($request->only('name','icon', 'tag'));
+        return $categories;
+    }
+
+    public function destroy(Categories $categories)
+    {
+        $categories->delete();
+        return ['deleted' => true];
     }
 }

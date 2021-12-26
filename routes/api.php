@@ -21,34 +21,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register',[AuthenticationController::class,'register']);
-Route::post('/login',[AuthenticationController::class,'login']);
+Route::post('/register',[AuthenticationController::class,'register']); // Регистрация
+Route::post('/login',[AuthenticationController::class,'login']); // Авторизация
 
-Route::get('/wallpapers', [WallpaperListController::class, 'getAllWallpapers']);
-Route::get('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'index']);
-Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'update']);
-Route::get('/wallpapers/new', [WallpaperListController::class, 'getNewWallpaper']);
-Route::get('/wallpapers/popular', [WallpaperListController::class, 'getPopularWallpaper']);
-Route::get('/wallpapers/wait', [WallpaperListController::class, 'getWaitWallpaper']);
+Route::get('/wallpapers', [WallpaperListController::class, 'getAllWallpapers']); // Вывод всех
+Route::get('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'index']); // Отображение одного поста
+Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
+Route::get('/wallpapers/new', [WallpaperListController::class, 'getNewWallpaper']); // отображение всех новых изображений по просмотрам.
+Route::get('/wallpapers/popular', [WallpaperListController::class, 'getPopularWallpaper']); // Отображение всех популярных
+Route::get('/wallpapers/wait', [WallpaperListController::class, 'getWaitWallpaper']); // Отображение всех ожидающий, не прошедшие проверку администратором
 
+Route::get('/brands', [BrandsListController::class, 'getBrands']); // Отображение всех брендов
+Route::get('/brands/{id}', [BrandsListController::class, 'getBrand']); // Отображение одного
+
+Route::get('/categories', [CategoriesListController::class, 'getCategories']); // Отображение всех категорий
+Route::get('/categories/{id}', [CategoriesListController::class, 'getCategory']); // Отображение одного
+
+// Только при авторизированном пользователе
 Route::middleware('auth:api')->group(function () {
-    Route::get('/wallpapers/favorite/{user}', [WallpaperListController::class, 'getFavoriteWallpaper']);
-    Route::get('/wallpapers/install/{user}', [WallpaperListController::class, 'getInstallWallpaper']);
-    Route::get('/wallpapers/load/{user}', [WallpaperListController::class, 'getLoadWallpaper']);
+    Route::get('/wallpapers/favorite', [WallpaperListController::class, 'getFavoriteWallpaper']); // Отображение избранных
+    Route::get('/wallpapers/install', [WallpaperListController::class, 'getInstallWallpaper']); // Отображение установленных
+    Route::get('/wallpapers/load', [WallpaperListController::class, 'getLoadWallpaper']); // Отображение загружанных
+    Route::post('/wallpapers/load', [WallpaperListController::class, 'CreateThemeWallpaper']); // Создание новой темы
+    Route::patch('/wallpapers/load', [WallpaperListController::class, 'ChangeThemeWallpaper']); // Редактирование темы
+});
 
-    Route::post('/wallpapers', [WallpaperListController::class, 'SetOneWallpaper']);
-
+// Только для привилегированных
+Route::middleware('auth:api, can:admin,moderator')->group(function (){
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::patch('/users/{user}', [UserController::class, 'update']);
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
-    Route::post('/categories', [CategoriesListController::class, 'addCategory']);
-    Route::post('/brands', [BrandsListController::class, 'getBrands']);
+    Route::post('/brands', [BrandsListController::class, 'store']); // Создание бренда
+    Route::patch('/brands', [BrandsListController::class, 'update']); // Редактирование бренда
+    Route::delete('/brands', [BrandsListController::class, 'destroy']); // Удаление бренда
+
+    Route::post('/categories', [CategoriesListController::class, 'store']); // Создание категорий
+    Route::patch('/categories', [CategoriesListController::class, 'update']); // Редактирование категорий
+    Route::delete('/categories', [CategoriesListController::class, 'destroy']); // Удаление категорий
 });
-
-Route::get('/brands', [BrandsListController::class, 'getBrands']);
-Route::get('/brands/{id}', [BrandsListController::class, 'getBrand']);
-
-Route::get('/categories', [CategoriesListController::class, 'getCategories']);
-Route::get('/categories/{id}', [CategoriesListController::class, 'getCategory']);
