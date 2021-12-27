@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ThemeRequest;
 use App\Http\Resources\CatalogResource;
 use App\Models\Catalog;
+use App\Models\catalog_download;
+use App\Models\license_type;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,5 +61,10 @@ class WallpaperListController extends Controller
     {
         $user_id = $request->user()->id;
         return CatalogResource::collection(Catalog::whereUserId($user_id)->get()); // get catalogs
+    }
+
+    public function CreateThemeWallpaper(ThemeRequest $request)
+    {
+
     }
 }
