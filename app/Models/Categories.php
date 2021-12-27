@@ -10,6 +10,6 @@ class Categories extends Model
     use HasFactory;
 
     protected $table = 'categories';
-
+    public $timestamps = false;
     protected $fillable = ['id', 'name', 'icon', 'tag'];
 }

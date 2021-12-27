@@ -10,6 +10,6 @@ class Brands extends Model
     use HasFactory;
 
     protected $table = 'brands';
-
+    public $timestamps = false;
     protected $fillable = ['id', 'name', 'icon', 'tag'];
 }

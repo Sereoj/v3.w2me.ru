@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 
@@ -26,10 +27,10 @@ class CategoriesListController extends Controller
         return Categories::create($request->only('name','icon', 'tag'));
     }
 
-    public function update(Categories $categories, Request $request)
+    public function update(Categories $category, Request $request)
     {
-        $categories->update($request->only('name','icon', 'tag'));
-        return $categories;
+        $category->update($request->only('name','icon', 'tag'));
+        return $category;
     }
 
     public function destroy(Categories $categories)

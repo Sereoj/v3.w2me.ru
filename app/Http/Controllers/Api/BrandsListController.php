@@ -28,10 +28,10 @@ class BrandsListController extends Controller
         return Brands::create($request->only('name','icon', 'tag'));
     }
 
-    public function update(Brands $brands, Request $request)
+    public function update(Brands $brand, Request $request)
     {
-        $brands->update($request->only('name','icon', 'tag'));
-        return $brands;
+        $brand->update($request->only('name','icon', 'tag'));
+        return $brand;
     }
 
     public function destroy(Brands $brands)
