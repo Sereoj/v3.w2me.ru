@@ -35,20 +35,6 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'users' => [
-            'driver' => 'local',
-            'root' => storage_path('app/users'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-        ],
-
-        'packets' => [
-            'driver' => 'local',
-            'root' => storage_path('app/packets'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
-        ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

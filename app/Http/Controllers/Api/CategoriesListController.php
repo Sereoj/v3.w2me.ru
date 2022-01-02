@@ -27,13 +27,13 @@ class CategoriesListController extends Controller
         return Categories::create($request->only('name','icon', 'tag'));
     }
 
-    public function update(Categories $category, Request $request)
+    public function update(Categories $categories, Request $request): Categories
     {
-        $category->update($request->only('name','icon', 'tag'));
-        return $category;
+        $categories->update($request->all());
+        return $categories;
     }
 
-    public function destroy(Categories $categories)
+    public function destroy(Categories $categories) : array
     {
         $categories->delete();
         return ['deleted' => true];

@@ -1,93 +1,39 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
+
+<!DOCTYPE HTML>
+<!--
+	Multiverse by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html lang="ru">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
-
-    <!-- Styles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
-    <!-- Иконки -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
+    <title>Wallone</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ asset("assets/css/main.css") }}" />
+    <noscript><link rel="stylesheet" href="{{ asset("assets/css/noscript.css") }}" /></noscript>
 </head>
-<body class="d-flex flex-column h-100">
-<style>
-    body {
-        position: relative;
-    }
+<body class="is-preload">
 
-    .images-list {
-        position: relative;
-    }
+<!-- Wrapper -->
+<div id="wrapper">
 
-    .images-list-text {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        padding: 0 20px 0 20px;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5);
-        width: 100%;
-    }
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="{{ route('index') }}"><strong>Wallone</strong> by sereoj</a></h1>
+    </header>
 
-    .carousel-caption {
-        text-shadow: 2px 2px 4px #000;
-    }
+    <!-- Main -->
+    @yield('content')
+</div>
 
-    .btn {
-        margin-top: 10px;
-    }
+<!-- Scripts -->
+<script src="{{ asset("assets/js/jquery.min.js") }}"></script>
+<script src="{{ asset("assets/js/jquery.poptrox.min.js") }}"></script>
+<script src="{{ asset("assets/js/browser.min.js") }}"></script>
+<script src="{{ asset("assets/js/breakpoints.min.js") }}"></script>
+<script src="{{ asset("assets/js/util.js") }}"></script>
+<script src="{{ asset("assets/js/main.js") }}"></script>
 
-    .photo {
-        width: 200px;
-        height: 200px;
-        margin: 0 auto;
-        overflow: hidden;
-        border-radius: 50%;
-    }
-
-    .photo-1 {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto;
-        overflow: hidden;
-        border-radius: 50%;
-    }
-
-    .profile {
-        width: auto;
-        height: 100%;
-        margin: 0 auto;
-    }
-</style>
-@include('layouts.nav')
-<main class="d-flex py-4">
-    <div class="container">
-        @yield('content')
-    </div>
-</main>
-<footer class="footer mt-auto py-4">
-    <div class="container d-flex">
-        <p>© 2021 World to Me</p>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
 </body>
 </html>

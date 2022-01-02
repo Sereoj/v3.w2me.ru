@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,53 +16,65 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        //
-        //id
         //name
         //email
         //email_verified_at
         //password
-        //user_type_id
-        //user_role_id
+        //description
+        //country
+        //dob
+        //cover
+        //avatar
         //favorite_themes
         //install_themes
-        //load_themes
+        //lang
         //api_token
-        //remember_token
-        //created_at
-        //updated_at
+        //upload
+        //facebook
+        //twitter
+        //google
+        //status
+        //reported
 
-        DB::table('users')->insert(
+        DB::table('users')->insert([
             [
-                [
-                    'id' => 1,
-                    'name' => 'admin',
-                    'email' => 'admin@w2me.ru',
-                    'email_verified_at' => null,
-                    'password' => Hash::make('admin'),
-                    'favorite_themes' => serialize([1, 3, 5]),
-                    'install_themes' => serialize([1,5]),
-                    'lang' => 'ru',
-                    'api_token' => '',
-                    'remember_token' => '',
-                    'created_at' => Carbon::today(),
-                    'updated_at' => Carbon::today(),
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'moderator',
-                    'email' => 'moderator@w2me.ru',
-                    'email_verified_at' => Carbon::today(),
-                    'password' => Hash::make('moderator'),
-                    'favorite_themes' => serialize([1, 3, 5]),
-                    'install_themes' => serialize([1,5]),
-                    'lang' => 'ru',
-                    'api_token' => '',
-                    'remember_token' => '',
-                    'created_at' => Carbon::today(),
-                    'updated_at' => Carbon::today(),
-                ],
+                'name' => 'Admin',
+                'email' => 'admin@w2me.ru',
+                'email_verified_at' => Carbon::today(),
+                'password' => Hash::make('admin'),
+                'description' => 'По всем вопросам: help@w2me.ru',
+                'country' => 'Russia',
+                'dob' => '1999-01-14',
+                'cover' => '',
+                'avatar' => '',
+                'favorite_themes' => serialize([1, 3, 5]),
+                'install_themes' => serialize([1, 3, 5]),
+                'lang' => 'ru',
+                'api_token' => '',
+                'facebook' => '',
+                'twitter' => '',
+                'google' => '',
+                'status' => 'Active'
+            ],
+            [
+                'name' => 'Helper',
+                'email' => 'help@w2me.ru',
+                'email_verified_at' => Carbon::today(),
+                'password' => Hash::make('helper'),
+                'description' => 'По всем вопросам: help@w2me.ru',
+                'country' => 'Russia',
+                'dob' => '1998-10-14',
+                'cover' => '',
+                'avatar' => '',
+                'favorite_themes' => '',
+                'install_themes' => '',
+                'lang' => 'ru',
+                'api_token' => '',
+                'facebook' => '',
+                'twitter' => '',
+                'google' => '',
+                'status' => 'Active'
             ]
-        );
+        ]);
     }
 }

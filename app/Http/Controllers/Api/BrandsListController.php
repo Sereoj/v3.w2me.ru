@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
 use App\Models\Brands;
-use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class BrandsListController extends Controller
@@ -30,7 +29,7 @@ class BrandsListController extends Controller
 
     public function update(Brands $brand, Request $request)
     {
-        $brand->update($request->only('name','icon', 'tag'));
+        $brand->update($request->all());
         return $brand;
     }
 

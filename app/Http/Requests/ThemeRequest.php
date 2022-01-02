@@ -2,34 +2,31 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class ThemeRequest extends FormRequest
 {
     public function rules()
     {
         return [
-            'name' => 'required|unique:catalog,name|min:4|max:100',
+            'id' => 'integer',
+            'name' => 'required|unique:photos,name|min:4|max:100',
             'description' => 'required|min:10|max:254',
-            'preview' => 'required|url',
+            'preview' => 'required',
+            'licence' => 'required|in:free,payment',
             'images' => 'required|array',
-                'images.sunrise' => 'required|array',
-                'images.sunrise.*' => 'url',
-                'images.day' => 'required|array',
-                'images.day.*' => 'url',
-                'images.sunset' => 'required|array',
-                'images.sunset.*' => 'url',
-                'images.night' => 'required|array',
-                'images.night.*' => 'url',
-            'category_id' => 'required|integer',
+                'images.*.type' => 'required|in:sunrise,day,sunset,night',
+                'images.*.url' => 'url',
+                'images.*.file' => 'file',
+            'cat_id' => 'required|integer',
             'brand_id' => 'required|integer',
-            'license' => 'required|array',
-                'license.cost' => 'required|integer',
-                'license.currency' => 'required',
-                'license.type' => 'required',
-            'download' => 'required|array',
-            'download.links' => 'required|array',
-            'download.links.link_0' => 'required|url',
+            'download_link' => 'required|url',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new ValidationException($validator, response()->json($validator->errors(),422));
     }
 }

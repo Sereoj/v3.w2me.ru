@@ -4,41 +4,20 @@ namespace App\Http\Controllers\UI;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CatalogResource;
-use App\Models\Catalog;
+use App\Http\Resources\SimplePageResource;
+use App\Models\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SimplePageController extends Controller
 {
-
-    public function __construct()
+    public function index()
     {
-    }
-
-    public function index($slug)
-    {
-        if($slug != null)
-        {
-            $catalog = $this->Catalog($slug);
-            if($catalog->exists())
-            {
-                $image = new CatalogResource($catalog);
-                return view('layouts.app', ['content' => view('pages.simple', [
-                'image' => $image,
-                'id' => $slug,
-                'favorite' => $this->isFavoriteExist($catalog->id),
-                'save' => $this->isInstallExist($catalog->id)
-                ])]);
-            }
-            return view('layouts.app', ['content' => view('pages.errors.not-found')]);
-        }
-        return view('layouts.app', ['content' => view('pages.errors.not-found')]);
+        return SimplePageResource::collection(Photos::whereId(13)->get());
     }
 
     public function store(Request $request)
     {
-        $slug = null;
-
         if($request->save && !$this->Guest())
         {
             $slug = $request->save;
@@ -98,7 +77,7 @@ class SimplePageController extends Controller
 
             if($themes != null)
             {
-                if(in_array($id, $themes)) {
+                if(in_array($id, $themes)){
                     return true;
                 }
                 return false;
@@ -114,13 +93,11 @@ class SimplePageController extends Controller
         if(!$this->isInstallExist($id))
         {
              $themes[] = $id;
-             Auth::user()->install_themes = serialize($themes);
-             Auth::user()->save();
         }else{
             $themes = array_diff($themes,[$id]);
-            Auth::user()->install_themes = serialize($themes);
-            Auth::user()->save();
         }
+        Auth::user()->install_themes = serialize($themes);
+        Auth::user()->save();
     }
 
     protected function favorite(int $id)
@@ -130,27 +107,25 @@ class SimplePageController extends Controller
         if(!$this->isFavoriteExist($id))
         {
             $themes[] = $id;
-            Auth::user()->favorite_themes = serialize($themes);
-            Auth::user()->save();
         }else{
             $themes = array_diff($themes,[$id]);
-            Auth::user()->favorite_themes = serialize($themes);
-            Auth::user()->save();
         }
+        Auth::user()->favorite_themes = serialize($themes);
+        Auth::user()->save();
     }
 
     protected function download(string $id)
     {
-        $catalog = new CatalogResource(Catalog::whereId($id)->first());
+        $catalog = new CatalogResource(Photos::whereId($id)->first());
         return response()->download('https://site112.com/img/200x200.png');
     }
 
     protected function Catalog(string $slug)
     {
         $name = str_replace('-', ' ',$slug);
-        return Catalog::where('name', $name)->first();
+        return Photos::whereName($name)->first();
     }
-    protected function Guest()
+    protected function Guest(): bool
     {
         return Auth::guest();
     }

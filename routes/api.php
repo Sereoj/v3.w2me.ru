@@ -6,8 +6,6 @@ use App\Http\Controllers\Api\BrandsListController;
 use App\Http\Controllers\Api\CategoriesListController;
 use App\Http\Controllers\Api\SimplePageWallpaperController;
 use App\Http\Controllers\Api\WallpaperListController;
-use App\Http\Controllers\UI\SimplePageController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +50,10 @@ Route::middleware('auth:api, can:admin,moderator')->group(function (){
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
     Route::post('/brands', [BrandsListController::class, 'store']); // Создание бренда
-    Route::patch('/brands/{brand}', [BrandsListController::class, 'update']); // Редактирование бренда
+    Route::patch('/brands/{brands}', [BrandsListController::class, 'update']); // Редактирование бренда
     Route::delete('/brands', [BrandsListController::class, 'destroy']); // Удаление бренда
 
     Route::post('/categories', [CategoriesListController::class, 'store']); // Создание категорий
-    Route::patch('/categories/{category}', [CategoriesListController::class, 'update']); // Редактирование категорий
+    Route::patch('/categories/{categories}', [CategoriesListController::class, 'update']); // Редактирование категорий
     Route::delete('/categories', [CategoriesListController::class, 'destroy']); // Удаление категорий
 });

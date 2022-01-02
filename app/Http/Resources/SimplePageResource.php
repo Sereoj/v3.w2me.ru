@@ -10,18 +10,17 @@ class SimplePageResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'views' => $this->views,
-            'like' => $this->like,
+            'likes' => $this->likes,
+            'downloads' => $this->downloads,
             'preview' => $this->preview,
-            'images' => unserialize($this->images),
-            'category' => $this->category,
-            'brand' => $this->brand,
-            'user' => $this->user,
-            'download' => $this->download,
-            'rating' => $this->rating,
+            'images' => $this->images,
+            'category' => new CategoryResource($this->category),
+            'brand' => new CategoryResource($this->brand),
+            'user' => new UserResource($this->user),
+            'download' => $this->download_link,
         ];
     }
 }

@@ -61,9 +61,7 @@ Route::name('images.')->group(
     }
 );
 
-Route::name('user.')->group(
-    function ()
-    {
+Route::name('user.')->group(function () {
         Route::middleware('auth:web')->group(function (){
             Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
             Route::post('/profile', [ProfileController::class, 'store']);
@@ -76,6 +74,16 @@ Route::name('user.')->group(
     }
 );
 
-Route::get('/call', function () {
-    Artisan::call('storage:link');
-});
+Route::name('server.')->group(function () {
+        Route::get('/server/link', function () {
+            Artisan::call('storage:link');
+        });
+
+//        Route::get('/test', function (){
+//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(416, 234)->save('storage/images/Dome_day_thumb.jpg');
+//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(856, 482)->save('storage/images/Dome_day_carousel.jpg');
+//            return $img->response();
+//            //return public_path('storage/uploads');
+//        });
+    }
+);

@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
@@ -53,15 +49,10 @@ class AuthenticationController extends Controller
         {
             event(new Registered($user = $this->create($request->all())));
 
-            $user->type()->create([
-                'type' => 1,
-                'gift_time' => now()->toDate(),
-                'cost' => '10000'
-            ]);
-
             $user->role()->create([
                 'role' => 'user'
             ]);
+
             $user->api_token = Str::random(32);
             $user->save();
             return ['token' => $user->api_token];

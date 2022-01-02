@@ -4,7 +4,7 @@ namespace App\Http\Controllers\UI;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CatalogResource;
-use App\Models\Catalog;
+use App\Models\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -17,25 +17,25 @@ class ThumbnailsController extends Controller
         //$this->middleware('guest');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $images = Catalog::all()->where('isActive');
-        return view('layouts.app', ['content' => view('pages.index', ['images' => $images])]);
+        $images = Photos::where('isActive', true)->paginate(10);
+        return view('layouts.app', ['content' => view('single', ['images' => $images])]);
     }
 
     public function index_new()
     {
-        $images = Catalog::orderBy('id','desc')->get()->where('isActive');
+        $images = Photos::orderBy('id','desc')->get()->where('isActive');
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Новые изображения'])]);
     }
     public function index_popular()
     {
-        $images = Catalog::orderBy('views','desc')->get()->where('isActive');
+        $images = Photos::orderBy('views','desc')->get()->where('isActive');
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Популярные изображения'])]);
     }
     public function index_wait()
     {
-        $images = Catalog::all()->where('isActive',false);
+        $images = Photos::all()->where('isActive',false);
         return view('layouts.app', ['content' => view('pages.index', ['images' => $images, 'header' => 'Ожидающие изображения'])]);
     }
 
@@ -47,7 +47,7 @@ class ThumbnailsController extends Controller
             $getFavorite = unserialize(Auth::user()->favorite_themes);
             if(is_array($getFavorite))
             {
-                $catalog = Catalog::whereIn('id', $getFavorite)->get();
+                $catalog = Photos::whereIn('id', $getFavorite)->get();
             }else{
                 $catalog = func_get_args();
             }
@@ -64,7 +64,7 @@ class ThumbnailsController extends Controller
 
             if(is_array($getInstall))
             {
-                $catalog = Catalog::whereIn('id', $getInstall)->get();
+                $catalog = Photos::whereIn('id', $getInstall)->get();
             }else{
                 $catalog = func_get_args();
             }
@@ -80,7 +80,7 @@ class ThumbnailsController extends Controller
         if(Auth::check())
         {
             $user_id = Auth::user()->id; // id user
-            $catalog = CatalogResource::collection(Catalog::whereUserId($user_id)->get()); // get catalogs
+            $catalog = CatalogResource::collection(Photos::whereUserId($user_id)->get()); // get catalogs
         }
         return view('layouts.app', ['content' => view('pages.load', ['catalog' => $catalog, 'header' => 'Вами загружанные изображения'])]);
     }
@@ -91,12 +91,12 @@ class ThumbnailsController extends Controller
         if(isset($request->delete))
         {
             $id = (int)$request->delete;
-            Catalog::whereId($id)->delete();
+            Photos::whereId($id)->delete();
         }
         if(isset($request->change))
         {
             $id = (int)$request->change;
-            $catalog = new CatalogResource(Catalog::whereId($id)->first());
+            $catalog = new CatalogResource(Photos::whereId($id)->first());
 
             return view('layouts.app', ['content' => view('pages.item.edit', ['catalog' => $catalog,'header' => 'Изменение коллекции'])]);
         }
