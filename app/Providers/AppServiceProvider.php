@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //JsonResource::withoutWrapping();
+        JsonResource::withoutWrapping();
 
         VerifyEmail::toMailUsing(function ($notifiable) {
 
