@@ -34,6 +34,7 @@
 <script src="{{ asset("assets/js/breakpoints.min.js") }}"></script>
 <script src="{{ asset("assets/js/util.js") }}"></script>
 <script src="{{ asset("assets/js/main.js") }}"></script>
+<script src="https://unpkg.com/infinite-scroll@4.0.1/dist/infinite-scroll.pkgd.min.js"></script>
 
 </body>
 </html>
