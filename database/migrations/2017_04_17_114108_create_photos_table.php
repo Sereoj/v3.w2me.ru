@@ -28,6 +28,7 @@ class CreatePhotosTable extends Migration
             $table->boolean('isActive')->default(false);
             $table->string('download_link')->nullable();
             $table->enum('reported', ['yes', 'no'])->nullable();
+            $table->timestamps();
         });
     }
 

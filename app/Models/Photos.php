@@ -49,7 +49,7 @@ class Photos extends Model
 
     protected $table = 'photos';
     protected $fillable = ['id', 'name', 'description', 'user_id', 'brand_id', 'cat_id', 'downloads', 'isActive', 'licence', 'likes', 'preview', 'reported', 'views', 'download_link'];
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function images(): HasMany
     {

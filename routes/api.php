@@ -26,7 +26,6 @@ Route::patch('/wallpapers/one/{id}', [SimplePageWallpaperController::class, 'upd
 Route::get('/wallpapers/new', [WallpaperListController::class, 'getNewWallpaper']); // отображение всех новых изображений по просмотрам.
 Route::get('/wallpapers/popular', [WallpaperListController::class, 'getPopularWallpaper']); // Отображение всех популярных
 Route::get('/wallpapers/wait', [WallpaperListController::class, 'getWaitWallpaper']); // Отображение всех ожидающий, не прошедшие проверку администратором
-
 Route::get('/brands', [BrandsListController::class, 'getBrands']); // Отображение всех брендов
 Route::get('/brands/{id}', [BrandsListController::class, 'getBrand']); // Отображение одного
 
@@ -40,6 +39,8 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/wallpapers/load', [WallpaperListController::class, 'getLoadWallpaper']); // Отображение загружанных
     Route::post('/wallpapers/load', [WallpaperListController::class, 'CreateThemeWallpaper']); // Создание новой темы
     Route::patch('/wallpapers/load', [WallpaperListController::class, 'ChangeThemeWallpaper']); // Редактирование темы
+
+    Route::get('/user', [UserController::class, 'user']);
 });
 
 // Только для привилегированных

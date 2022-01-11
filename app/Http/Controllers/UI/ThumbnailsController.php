@@ -20,7 +20,7 @@ class ThumbnailsController extends Controller
     public function index(Request $request)
     {
         $images = Photos::where('isActive', true)->cursorPaginate(10);
-        return view('layouts.app', ['content' => view('single', ['images' => $images])]);
+        return view('layouts.app', ['content' => view('article', ['images' => $images])]);
     }
 
     public function index_new()

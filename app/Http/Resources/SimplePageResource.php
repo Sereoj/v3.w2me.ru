@@ -10,6 +10,7 @@ class SimplePageResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'views' => $this->views,
@@ -21,6 +22,7 @@ class SimplePageResource extends JsonResource
             'brand' => new CategoryResource($this->brand),
             'user' => new UserResource($this->user),
             'download' => $this->download_link,
+            'created_at' => $this->created_at,
         ];
     }
 }

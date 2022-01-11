@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ThemeRequest;
 use App\Http\Resources\CatalogResource;
 use App\Http\Resources\UserResource;
+use App\Models\Brands;
+use App\Models\Categories;
 use App\Models\Pages;
 use App\Models\Photos;
 use Illuminate\Http\Request;
@@ -15,9 +17,23 @@ use Str;
 
 class WallpaperListController extends Controller
 {
-    public function getAllWallpapers(): AnonymousResourceCollection
+    public function getAllWallpapers(Request $request): AnonymousResourceCollection
     {
-        return CatalogResource::collection(Photos::all()->where('isActive'));
+        $query  = Photos::query()->where('isActive', true);
+
+        if($request->filled('category_id'))
+        {
+            $query->where('cat_id', $request->category_id);
+        }
+        if($request->filled('brand_id'))
+        {
+            $query->where('brand_id', $request->brand_id);
+        }
+        if($request->filled('user_id'))
+        {
+            $query->where('user_id', $request->user_id);
+        }
+        return CatalogResource::collection($query->get());
     }
 
     public function getNewWallpaper(): AnonymousResourceCollection
@@ -79,11 +95,10 @@ class WallpaperListController extends Controller
                 $photos->images()->updateOrCreate([
                     'name' => $theme['name'],
                     'type' => $type,
-                    'location' => '/public/storage/images/' . $img->getClientOriginalName(),
+                    'location' => '/public/storage/images/carousel_' . $img->getClientOriginalName(),
                     'photo_type' => $original->mime()
                 ]);
             }
-
         }
         return $photos;
     }
@@ -102,8 +117,6 @@ class WallpaperListController extends Controller
     {
         return $this->theme($request);
     }
-
-
 
     public function ChangeThemeWallpaper(Request $request)
     {

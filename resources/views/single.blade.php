@@ -1,1 +1,2 @@
-<?php
+@section('content')
+@endsection
