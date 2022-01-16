@@ -31,7 +31,8 @@ class CreateUsersTable extends Migration
             $table->enum('upload', ['yes', 'no'])->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
-            $table->string('google')->nullable();
+            $table->string('github')->nullable();
+            $table->string('vk')->nullable();
             $table->enum('status', ['Active', 'Disabled'])->nullable();
             $table->enum('reported', ['yes', 'no'])->nullable();
             $table->rememberToken();

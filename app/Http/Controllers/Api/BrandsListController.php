@@ -11,7 +11,7 @@ class BrandsListController extends Controller
 {
     public function getBrands()
     {
-        return Brands::all();
+        return Brands::all()->where('status', 'Active');
     }
 
     public function getBrand($id)
