@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 /**
  * index w2me.ru
  * index->login
@@ -30,52 +29,60 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
-Route::get('/',[ThumbnailsController::class, 'index'])->name('index');
-
-Route::name('images.')->group(
-    function ()
-    {
-        Route::get('/categories',[ThumbnailsController::class, 'index'])->name('catalog');
-        Route::get('/{category}/catalog',[ThumbnailsController::class, 'index'])->name('category');
-
-        Route::get('/catalog',[ThumbnailsController::class, 'index'])->name('catalog');
-
-        Route::get('/catalog/new',[ThumbnailsController::class, 'index_new'])->name('new');
-        Route::get('/catalog/popular',[ThumbnailsController::class, 'index_popular'])->name('popular');
-        Route::get('/catalog/wait',[ThumbnailsController::class, 'index_wait'])->name('wait');
-
-        Route::get('/catalog/{slug}',[SimplePageController::class, 'index'])->name('simple');
-        Route::post('/catalog/{slug}',[SimplePageController::class, 'store']);
-
-        Route::middleware('auth:web')->group(function (){
-            //gets
-            Route::get('/catalog/download/{id}',[SimplePageController::class, 'index'])->name('download');
-
-            Route::get('/favorite',[ThumbnailsController::class, 'index_favorite'])->name('favorite');
-            Route::get('/install',[ThumbnailsController::class, 'index_install'])->name('install');
-            Route::get('/load',[ThumbnailsController::class, 'index_load'])->name('load');
-
-            //post
-            Route::post('/load',[ThumbnailsController::class, 'store_load']);
-        });
-    }
-);
-
-Route::name('user.')->group(
-    function ()
-    {
-        Route::middleware('auth:web')->group(function (){
-            Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-            Route::post('/profile', [ProfileController::class, 'store']);
-
-            Route::get('/profile/edit', [EditProfileController::class, 'index'])->name('edit');
-            Route::post('/profile/edit', [EditProfileController::class, 'store']);
+//Route::get('/',[ThumbnailsController::class, 'index'])->name('index');
 //
-//            Route::get('/logout',[ProfileController::class, 'logout'])->name('logout');
+//Route::name('images.')->group(
+//    function ()
+//    {
+//        Route::get('/categories',[ThumbnailsController::class, 'index'])->name('catalog');
+//        Route::get('/{category}/catalog',[ThumbnailsController::class, 'index'])->name('category');
+//
+//        Route::get('/catalog',[ThumbnailsController::class, 'index'])->name('catalog');
+//
+//        Route::get('/catalog/new',[ThumbnailsController::class, 'index_new'])->name('new');
+//        Route::get('/catalog/popular',[ThumbnailsController::class, 'index_popular'])->name('popular');
+//        Route::get('/catalog/wait',[ThumbnailsController::class, 'index_wait'])->name('wait');
+//
+//        Route::get('/catalog/{slug}',[SimplePageController::class, 'index'])->name('simple');
+//        Route::post('/catalog/{slug}',[SimplePageController::class, 'store']);
+//
+//        Route::middleware('auth:web')->group(function (){
+//            //gets
+//            Route::get('/catalog/download/{id}',[SimplePageController::class, 'index'])->name('download');
+//
+//            Route::get('/favorite',[ThumbnailsController::class, 'index_favorite'])->name('favorite');
+//            Route::get('/install',[ThumbnailsController::class, 'index_install'])->name('install');
+//            Route::get('/load',[ThumbnailsController::class, 'index_load'])->name('load');
+//
+//            //post
+//            Route::post('/load',[ThumbnailsController::class, 'store_load']);
+//        });
+//    }
+//);
+//
+//Route::name('user.')->group(function () {
+//        Route::middleware('auth:web')->group(function (){
+//            Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+//            Route::post('/profile', [ProfileController::class, 'store']);
+//
+//            Route::get('/profile/edit', [EditProfileController::class, 'index'])->name('edit');
+//            Route::post('/profile/edit', [EditProfileController::class, 'store']);
+////
+////            Route::get('/logout',[ProfileController::class, 'logout'])->name('logout');
+//        });
+//    }
+//);
+
+Route::name('server.')->group(function () {
+        Route::get('/server/link', function () {
+            Artisan::call('storage:link');
         });
+
+//        Route::get('/test', function (){
+//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(416, 234)->save('storage/images/Dome_day_thumb.jpg');
+//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(856, 482)->save('storage/images/Dome_day_carousel.jpg');
+//            return $img->response();
+//            //return public_path('storage/uploads');
+//        });
     }
 );
-
-Route::get('/call', function () {
-    Artisan::call('storage:link');
-});
