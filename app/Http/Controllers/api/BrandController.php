@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BrandRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class BrandController extends Controller
         return Brand::all();
     }
 
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
         return Brand::create($request->all());
     }

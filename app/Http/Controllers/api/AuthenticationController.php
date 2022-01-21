@@ -21,8 +21,8 @@ class AuthenticationController extends Controller
 
         if(!$validator->fails())
         {
-            $user = User::whereEmail($request->email)->first();
-            if($user && Hash::check($request->password, $user->password))
+            $user = User::whereEmail($request->get('email'))->first();
+            if($user && Hash::check($request->get('password'), $user->password))
             {
                 $token = $user->createToken($user->name);
                 $user->setRememberToken($token->plainTextToken);

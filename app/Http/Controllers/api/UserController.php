@@ -28,7 +28,7 @@ class UserController extends Controller
         {
             return UserFriend::create([
                 'user_id' => $request->user()->id,
-                'friend_id' => $request->friend_id
+                'friend_id' => $request->get('friend_id')
             ]);
         }
         return $validator->messages();
@@ -42,7 +42,7 @@ class UserController extends Controller
 
         if(!$validator->fails())
         {
-            return UserFriend::query()->where('user_id',$request->user()->id)->where('friend_id', $request->friend_id)->delete();
+            return UserFriend::query()->where('user_id',$request->user()->id)->where('friend_id', $request->get('friend_id'))->delete();
         }
         return $validator->messages();
     }
@@ -83,7 +83,7 @@ class UserController extends Controller
         {
             return UserFavorite::create([
                 'user_id' => $request->user()->id,
-                'post_id' => $request->post_id
+                'post_id' => $request->get('post_id')
             ]);
         }
         return $validator->messages();
@@ -97,7 +97,7 @@ class UserController extends Controller
 
         if(!$validator->fails())
         {
-            return UserFavorite::query()->where('user_id',$request->user()->id)->where('post_id', $request->post_id)->delete();
+            return UserFavorite::query()->where('user_id',$request->user()->id)->where('post_id', $request->get('post_id'))->delete();
         }
         return $validator->messages();
     }
@@ -117,7 +117,7 @@ class UserController extends Controller
         {
             return UserInstall::create([
                 'user_id' => $request->user()->id,
-                'post_id' => $request->post_id
+                'post_id' => $request->get('post_id')
             ]);
         }
         return $validator->messages();
@@ -131,7 +131,7 @@ class UserController extends Controller
 
         if(!$validator->fails())
         {
-            return UserInstall::query()->where('user_id',$request->user()->id)->where('post_id', $request->post_id)->delete();
+            return UserInstall::query()->where('user_id',$request->user()->id)->where('post_id', $request->get('post_id'))->delete();
         }
         return $validator->messages();
     }

@@ -3,14 +3,14 @@
     "",
     "\\app",
     "\\app\\Http",
-    "\\app\\Http\\Controllers",
-    "\\app\\Http\\Controllers\\Api",
-    "\\app\\Models",
+    "\\app\\Http\\Middleware",
+    "\\app\\Http\\Requests",
+    "\\app\\Http\\Resources",
     "\\database",
     "\\database\\factories",
     "\\database\\migrations",
     "\\routes"
   ],
-  "SelectedNode": "\\database\\migrations",
+  "SelectedNode": "\\app\\Http\\Requests\\ThemeRequest.php",
   "PreviewInSolutionExplorer": false
 }

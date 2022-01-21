@@ -78,7 +78,15 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    public const MEMBER = 0;
+    public const HELPER = 1;
+    public const ADMIN = 2;
+
+    protected $perPage = 10;
+
     protected $fillable = ['name', 'id', 'description', 'remember_token', 'lang', 'dob', 'cover' ,'country', 'avatar', 'reported', 'facebook', 'twitter', 'email', 'role', 'password', 'github', 'vk'];
+
     public $timestamps = true;
     protected $hidden = [
         'password',
@@ -118,5 +126,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subscriptions()
     {
         return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id');
+    }
+
+
+    public function getIsMemberAttribute(): bool
+    {
+        return $this->role === self::MEMBER;
+    }
+
+    public function getIsHelperAttribute(): bool
+    {
+        return $this->role === self::HELPER;
+    }
+
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role === self::ADMIN;
     }
 }

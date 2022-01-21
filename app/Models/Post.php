@@ -52,12 +52,24 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $perPage = 10;
+
     protected $guarded = [];
     protected $fillable = ['id', 'description', 'user_id', 'reported', 'name', 'downloads', 'likes', 'views', 'isActive', 'brand_id', 'preview', 'slug', 'licence', 'download_link', 'meta'];
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(PostCategory::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(PostTag::class);
     }
 }

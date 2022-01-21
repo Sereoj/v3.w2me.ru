@@ -25,6 +25,9 @@ Route::post('/login',[AuthenticationController::class,'login']); // Автори
 
 Route::get('/wallpapers', [PostController::class, 'index']); // Вывод всех
 Route::get('/wallpapers/one/{post}', [PostController::class, 'show']); // Отображение одного поста
+Route::get('/wallpapers/one/{post}/images', [PostController::class, 'images']); // Отобразить связанные изображения
+Route::get('/wallpapers/one/{post}/tags', [PostController::class, 'tags']); // Отобразить все теги поста
+Route::get('/wallpapers/one/{post}/categories', [PostController::class, 'categories']); // Отобразить все категории поста
 Route::patch('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
 Route::get('/wallpapers/new', [PostController::class, 'new']); // отображение всех новых изображений по просмотрам.
 Route::get('/wallpapers/popular', [PostController::class, 'popular']); // Отображение всех популярных
@@ -58,7 +61,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/wallpapers/load', [UserController::class, 'load']); // Отображение загружанных
     Route::post('/wallpapers/load', [PostController::class, 'create']); // Создание новой темы
-    Route::patch('/wallpapers/load', [PostController::class, 'edit']); // Редактирование темы
+
+    //При этом, пользователь может редактировать только свои темы
+    Route::post('/wallpapers/load', [PostController::class, 'edit']); // Редактирование темы
+
+    //Тихое удаление, тема должна оставаться в базе данных, но при этом не отображаться
+    Route::delete('/wallpapers/load', [PostController::class, 'destroy']); // Редактирование темы
 
     Route::post('/user/{user}/add', [UserController::class, 'append']); // Добавить друга
     Route::post('/user/{user}/remove', [UserController::class, 'remove']); // Удалить друга
