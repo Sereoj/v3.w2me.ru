@@ -76,7 +76,7 @@ class UserController extends Controller
     public function store_favorite(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'post_id' => 'required|integer|unique:posts,id|exists:posts,id',
+            'post_id' => 'required|integer|unique:user_favorites,post_id|exists:posts,id',
         ]);
 
         if(!$validator->fails())
@@ -110,7 +110,7 @@ class UserController extends Controller
     public function store_install(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'post_id' => 'required|integer|unique:posts,id|exists:posts,id',
+            'post_id' => 'required|integer|unique:user_installs,post_id|exists:posts,id',
         ]);
 
         if(!$validator->fails())
