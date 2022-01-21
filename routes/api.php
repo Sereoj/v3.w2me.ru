@@ -72,22 +72,22 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/{user}/remove', [UserController::class, 'remove']); // Удалить друга
 
     Route::patch('/user/profile/edit', [UserController::class, 'update']); //Может редактировать профиль
-});
 
 // Только для привилегированных
-Route::middleware('auth:sanctum')->group(function (){
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{user}', [UserController::class, 'show']);
-    Route::patch('/users/{user}', [UserController::class, 'update']);
-    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+    Route::middleware('can:admin')->group(function (){
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users/{user}', [UserController::class, 'show']);
+        Route::patch('/users/{user}', [UserController::class, 'update']);
+        Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
-    Route::post('/brands', [BrandController::class, 'store']); // Создание бренда
-    Route::patch('/brands/{brand}', [BrandController::class, 'update']); // Редактирование бренда
-    Route::delete('/brands/{brand}', [BrandController::class, 'destroy']); // Удаление бренда
+        Route::post('/brands', [BrandController::class, 'store']); // Создание бренда
+        Route::patch('/brands/{brand}', [BrandController::class, 'update']); // Редактирование бренда
+        Route::delete('/brands/{brand}', [BrandController::class, 'destroy']); // Удаление бренда
 
-    Route::post('/categories', [CategoryController::class, 'store']); // Создание категорий
-    Route::patch('/categories/{category}', [CategoryController::class, 'update']); // Редактирование категорий
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']); // Удаление категорий
+        Route::post('/categories', [CategoryController::class, 'store']); // Создание категорий
+        Route::patch('/categories/{category}', [CategoryController::class, 'update']); // Редактирование категорий
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy']); // Удаление категорий
+    });
 });
 
 
