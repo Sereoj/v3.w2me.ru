@@ -148,17 +148,20 @@ class UserController extends Controller
         return $user->loads()->get();
     }
 
-    //Изменить фотографию
-    public function store(Request $request, User $user)
+    //пользователь может редактированить свои данные
+    public function update(Request $request)
     {
-
+        return $request->user()->update($request->all());
     }
 
+    //отобразить 1 пользователя
     public function show(User $user)
     {
         return $user;
     }
-    public function update(Request $request, User $user)
+
+    //админ редактирование 1 пользователя
+    public function store(Request $request, User $user)
     {
         return $user->update($request->all());
     }

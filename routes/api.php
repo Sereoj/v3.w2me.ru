@@ -71,13 +71,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/{user}/add', [UserController::class, 'append']); // Добавить друга
     Route::post('/user/{user}/remove', [UserController::class, 'remove']); // Удалить друга
 
-    Route::patch('/user/profile/edit', [UserController::class, 'update']); //Может редактировать профиль
+    Route::post('/user/profile/edit', [UserController::class, 'update']); //Может редактировать профиль
 
 // Только для привилегированных
     Route::middleware('can:admin')->group(function (){
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/users/{user}', [UserController::class, 'show']);
-        Route::patch('/users/{user}', [UserController::class, 'update']);
+        Route::post('/users/{user}', [UserController::class, 'store']);
         Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
         Route::post('/brands', [BrandController::class, 'store']); // Создание бренда
