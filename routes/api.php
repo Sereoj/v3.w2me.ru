@@ -28,7 +28,8 @@ Route::get('/wallpapers/one/{post}', [PostController::class, 'show']); // Ото
 Route::get('/wallpapers/one/{post}/images', [PostController::class, 'images']); // Отобразить связанные изображения
 Route::get('/wallpapers/one/{post}/tags', [PostController::class, 'tags']); // Отобразить все теги поста
 Route::get('/wallpapers/one/{post}/categories', [PostController::class, 'categories']); // Отобразить все категории поста
-Route::patch('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
+Route::get('/wallpapers/one/{post}/likes', [PostController::class, 'likes']); // Отобразить все категории поста
+
 Route::get('/wallpapers/new', [PostController::class, 'new']); // отображение всех новых изображений по просмотрам.
 Route::get('/wallpapers/popular', [PostController::class, 'popular']); // Отображение всех популярных
 Route::get('/wallpapers/wait', [PostController::class, 'wait']); // Отображение всех ожидающий, не прошедшие проверку администратором
@@ -49,6 +50,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Каждый пользователь может авторизироваться по ключу
     Route::get('/user/token', [UserController::class, 'token']);
+
+    Route::patch('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
 
     //Свой аккаунт
     Route::get('/wallpapers/favorite', [UserController::class, 'favorite']); // Отображение избранных

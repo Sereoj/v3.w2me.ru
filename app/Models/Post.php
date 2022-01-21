@@ -63,13 +63,18 @@ class Post extends Model
         return $this->hasMany(Image::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'user_likes');
+    }
+
     public function categories()
     {
-        return $this->belongsToMany(PostCategory::class);
+        return $this->belongsToMany(Category::class, 'post_categories');
     }
 
     public function tags()
     {
-        return $this->belongsToMany(PostTag::class);
+        return $this->belongsToMany(Tag::class, 'post_tags');
     }
 }

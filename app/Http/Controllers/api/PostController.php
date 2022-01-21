@@ -4,9 +4,13 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EditThemeRequest;
+use App\Http\Requests\SinglePageRequest;
 use App\Http\Requests\ThemeRequest;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\UserFavorite;
+use App\Models\UserInstall;
+use App\Models\UserLike;
 use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -41,6 +45,12 @@ class PostController extends Controller
     public function images(Post $post)
     {
         return $post->images()->get();
+    }
+
+    //Отобразить лайки пользователей
+    public function likes(Post $post)
+    {
+        return $post->likes()->get();
     }
 
     //Создание новой страницы
@@ -145,13 +155,76 @@ class PostController extends Controller
 
     }
 
-    //Обновление страницы, просмотры и т.д
-    public function update(Request $request, Post $post)
+    //Гости и другие. Обновление страницы, просмотры и т.д
+    public function update_guests(Post $post)
     {
-        $post->update($request->only('views', 'downloads', 'likes'));
-        return $post;
+
     }
 
+    //Авторизованный пользователь! Обновление страницы, лайки и т.д
+    public function update(SinglePageRequest $request, Post $post)
+    {
+        //Должна быть отдельная таблица
+        //$post->views ++;
+
+        $user_id = $request->user()->id;
+        $post_id = $post->id;
+
+        if($request->has('reaction'))
+        {
+            switch ($request->get('reaction'))
+            {
+                case "like":
+                    UserLike::updateOrCreate([
+                        'user_id' => $user_id,
+                        'post_id' => $post_id
+                    ]);
+                    $post->likes ++;
+                    break;
+                case "unlike":
+                    UserLike::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                    if($post->likes > 0)
+                        $post->likes --;
+                    break;
+            }
+        }
+
+        if($request->has('download'))
+        {
+            //Учитывается популярность, дабы избежать низкие рейтинги, counter только прибавляется
+            switch ($request->get('download'))
+            {
+                case "true":
+                    UserInstall::updateOrCreate([
+                        'user_id' => $user_id,
+                        'post_id' => $post_id
+                    ]);
+                    $post->downloads ++;
+                    break;
+                case "false":
+                    UserInstall::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                    break;
+            }
+        }
+
+        if($request->has('favorite'))
+        {
+            switch ($request->get('favorite'))
+            {
+                case "true":
+                    UserFavorite::updateOrCreate([
+                        'user_id' => $user_id,
+                        'post_id' => $post_id
+                    ]);
+                    $post->downloads ++;
+                    break;
+                case "false":
+                    UserFavorite::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                    break;
+            }
+        }
+        return $post;
+    }
 
     public function popular()
     {
