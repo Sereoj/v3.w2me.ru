@@ -30,4 +30,9 @@ class Category extends Model
     protected $table = 'categories';
     public $timestamps = false;
     protected $fillable = ['icon', 'tag', 'description', 'id', 'name'];
+
+    public function posts()
+    {
+        return $this->belongsToMany(Post::class, 'post_categories');
+    }
 }

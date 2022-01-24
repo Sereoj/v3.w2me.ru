@@ -17,8 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/server/telescope', function () {
+    Artisan::call('storage:link');
+    Artisan::call('config:cache');
+    Artisan::call('config:clear');
+    Artisan::call('migrate');
+});
 
-//Общедоступные для гостей и пользователей
+
+//Общедоступные
 
 Route::post('/register',[AuthenticationController::class,'register']); // Регистрация
 Route::post('/login',[AuthenticationController::class,'login']); // Авторизация
@@ -45,13 +52,17 @@ Route::get('/user/{user}/friends', [UserController::class, 'friends']);
 Route::get('/user/{user}/subs', [UserController::class, 'subscriptions']);
 Route::get('/user/{user}/loads', [UserController::class, 'loads']);
 
+
+Route::get('/app/version', function (){ return ['version' => '1.0']; });
+
 // Только при авторизированном пользователе
 Route::middleware('auth:sanctum')->group(function () {
 
     //Каждый пользователь может авторизироваться по ключу
     Route::get('/user/token', [UserController::class, 'token']);
+    Route::get('/user', [UserController::class, 'user']); //old
 
-    Route::patch('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
+    Route::post('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
 
     //Свой аккаунт
     Route::get('/wallpapers/favorite', [UserController::class, 'favorite']); // Отображение избранных

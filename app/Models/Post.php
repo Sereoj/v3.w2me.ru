@@ -63,11 +63,20 @@ class Post extends Model
         return $this->hasMany(Image::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function likes()
     {
         return $this->belongsToMany(User::class, 'user_likes');
     }
 
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'post_categories');
@@ -76,5 +85,25 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_tags');
+    }
+
+    public function favorite()
+    {
+        return $this->belongsToMany(User::class, 'user_favorites');
+    }
+
+    public function getPostsAttribute($value)
+    {
+        return $value;
+    }
+
+    public function install()
+    {
+        return $this->belongsToMany(User::class, UserInstall::class);
+    }
+
+    public function reaction()
+    {
+        return $this->belongsToMany(User::class, UserLike::class);
     }
 }

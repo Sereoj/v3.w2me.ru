@@ -97,20 +97,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-
     public function favorites()
     {
-        return $this->belongsToMany(Post::class, 'user_favorites', 'post_id');
+        return $this->belongsToMany(Post::class, 'user_favorites');
     }
 
     public function likes()
     {
-        return $this->belongsToMany(Post::class,'user_likes', 'post_id');
+        return $this->belongsToMany(Post::class,'user_likes');
     }
 
     public function installs()
     {
-        return $this->belongsToMany(Post::class,'user_installs', 'post_id');
+        return $this->belongsToMany(Post::class,'user_installs');
     }
 
     public function loads()
@@ -127,7 +126,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id');
     }
-
 
     public function getIsMemberAttribute(): bool
     {

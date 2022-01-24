@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\UI\EditProfileController;
-use App\Http\Controllers\UI\ProfileController;
-use App\Http\Controllers\UI\SimplePageController;
-use App\Http\Controllers\UI\ThumbnailsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,16 +69,19 @@ Auth::routes(['verify' => true]);
 //    }
 //);
 
-Route::name('server.')->group(function () {
-        Route::get('/server/link', function () {
-            Artisan::call('storage:link');
-        });
+Route::name('server.')->group(function ()
+{
 
-//        Route::get('/test', function (){
-//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(416, 234)->save('storage/images/Dome_day_thumb.jpg');
-//            $img = Image::make(public_path('storage/uploads/Dome_day.jpg'))->resize(856, 482)->save('storage/images/Dome_day_carousel.jpg');
-//            return $img->response();
-//            //return public_path('storage/uploads');
-//        });
-    }
+    Route::get('/server/telescope', function () {
+        Artisan::call('storage:link');
+        Artisan::call('telescope:install');
+        Artisan::call('migrate');
+    });
+
+    Route::get('/server/cache', function () {
+        Artisan::call('config:cache');
+        Artisan::call('config:clear');
+        return 'true';
+    });
+}
 );

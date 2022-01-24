@@ -11,8 +11,8 @@ class SinglePageRequest extends FormRequest
     public function rules()
     {
         return [
-            'reaction' => 'required',
-            'download' => 'required',
+            'reaction' => 'nullable',
+            'download' => 'nullable',
             'favorite' => 'nullable',
         ];
     }

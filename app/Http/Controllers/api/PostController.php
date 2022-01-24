@@ -6,27 +6,113 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EditThemeRequest;
 use App\Http\Requests\SinglePageRequest;
 use App\Http\Requests\ThemeRequest;
+use App\Http\Resources\CatalogResource;
+use App\Http\Resources\SimplePageResource;
+use App\Http\Resources\SinglePageShortResource;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\UserFavorite;
 use App\Models\UserInstall;
 use App\Models\UserLike;
-use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
     //Отображение всех активных
-    public function index()
+    public function index(Request $request)
     {
-        return Post::where('isActive', true)->get();
+        $query = Post::query()->where('isActive', true);
+
+        if($request->has('brand_id'))
+        {
+            $query->where('brand_id', $request->get('brand_id'));
+        }
+
+        if($request->has('category_id'))
+        {
+          return  CatalogResource::collection(Category::find($request->get('category_id'))->posts()->where('isActive', true)->get());
+        }
+
+        return CatalogResource::collection($query->get());
     }
 
     //Отображение одной страницы
     public function show(Post $post)
     {
-        return $post;
+        $post->views ++;
+        $post->save();
+        $post->posts = CatalogResource::collection(Post::inRandomOrder()->take(5)->get());
+        return new SimplePageResource($post);
+    }
+
+    //Авторизованный пользователь! Обновление страницы, лайки и т.д
+    public function update(SinglePageRequest $request, Post $post)
+    {
+        $user_id = $request->user()->id;
+        $post_id = $post->id;
+        if($request->has('reaction'))
+        {
+            switch ($request->get('reaction'))
+            {
+                case "true":
+
+                    if(!UserLike::where('user_id', $user_id)->where('post_id', $post_id)->exists())
+                    {
+                        UserLike::updateOrCreate([
+                            'user_id' => $user_id,
+                            'post_id' => $post_id
+                        ]);
+                        $post->likes ++;
+                    }
+                    break;
+                case "false":
+                    if(UserLike::where('user_id', $user_id)->where('post_id', $post_id)->exists())
+                    {
+                        UserLike::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                        if($post->likes > 0)
+                            $post->likes --;
+                    }
+                    break;
+            }
+        }
+
+        if($request->has('download'))
+        {
+            //Учитывается популярность, дабы избежать низкие рейтинги, counter только прибавляется
+            switch ($request->get('download'))
+            {
+                case "true":
+                    UserInstall::updateOrCreate([
+                        'user_id' => $user_id,
+                        'post_id' => $post_id
+                    ]);
+                    $post->downloads ++;
+                    break;
+                case "false":
+                    UserInstall::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                    break;
+            }
+        }
+
+        if($request->has('favorite'))
+        {
+            switch ($request->get('favorite'))
+            {
+                case "true":
+                    UserFavorite::updateOrCreate([
+                        'user_id' => $user_id,
+                        'post_id' => $post_id
+                    ]);
+                    break;
+                case "false":
+                    UserFavorite::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
+                    break;
+            }
+        }
+        $post->save();
+        return new SinglePageShortResource($post);
     }
 
     //Отобразить все теги поста
@@ -153,77 +239,6 @@ class PostController extends Controller
     public function destroy()
     {
 
-    }
-
-    //Гости и другие. Обновление страницы, просмотры и т.д
-    public function update_guests(Post $post)
-    {
-
-    }
-
-    //Авторизованный пользователь! Обновление страницы, лайки и т.д
-    public function update(SinglePageRequest $request, Post $post)
-    {
-        //Должна быть отдельная таблица
-        //$post->views ++;
-
-        $user_id = $request->user()->id;
-        $post_id = $post->id;
-
-        if($request->has('reaction'))
-        {
-            switch ($request->get('reaction'))
-            {
-                case "like":
-                    UserLike::updateOrCreate([
-                        'user_id' => $user_id,
-                        'post_id' => $post_id
-                    ]);
-                    $post->likes ++;
-                    break;
-                case "unlike":
-                    UserLike::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
-                    if($post->likes > 0)
-                        $post->likes --;
-                    break;
-            }
-        }
-
-        if($request->has('download'))
-        {
-            //Учитывается популярность, дабы избежать низкие рейтинги, counter только прибавляется
-            switch ($request->get('download'))
-            {
-                case "true":
-                    UserInstall::updateOrCreate([
-                        'user_id' => $user_id,
-                        'post_id' => $post_id
-                    ]);
-                    $post->downloads ++;
-                    break;
-                case "false":
-                    UserInstall::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
-                    break;
-            }
-        }
-
-        if($request->has('favorite'))
-        {
-            switch ($request->get('favorite'))
-            {
-                case "true":
-                    UserFavorite::updateOrCreate([
-                        'user_id' => $user_id,
-                        'post_id' => $post_id
-                    ]);
-                    $post->downloads ++;
-                    break;
-                case "false":
-                    UserFavorite::query()->where('user_id', $user_id)->where('post_id', $post_id)->delete();
-                    break;
-            }
-        }
-        return $post;
     }
 
     public function popular()

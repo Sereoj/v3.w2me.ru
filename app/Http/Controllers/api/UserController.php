@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CatalogResource;
+use App\Http\Resources\ProfileResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserFavorite;
 use App\Models\UserFriend;
@@ -50,12 +53,22 @@ class UserController extends Controller
     public function token(Request $request)
     {
 
-        return $request->user() ?? [''];
+        return $request->user()->id ? [
+            'status' => 'true'
+        ] : [
+            'status' => 'false'
+        ];
     }
 
-    public function profile(User $user) : User
+    public function user(Request $request)
     {
-        return $user;
+        return new UserResource($request->user());
+    }
+
+    public function profile(User $user)
+    {
+        //return $user;
+        return new ProfileResource($user);
     }
 
     public function subscriptions(User $user)
@@ -70,7 +83,7 @@ class UserController extends Controller
 
     public function favorite(Request $request)
     {
-        return $request->user()->favorites()->get();
+        return CatalogResource::collection($request->user()->favorites()->get());
     }
 
     public function store_favorite(Request $request)
@@ -104,7 +117,7 @@ class UserController extends Controller
 
     public function install(Request $request)
     {
-        return $request->user()->installs()->get();
+        return CatalogResource::collection($request->user()->installs()->get());
     }
 
     public function store_install(Request $request)
@@ -145,7 +158,7 @@ class UserController extends Controller
     //Сокращенная информация
     public function loads(User $user)
     {
-        return $user->loads()->get();
+        return CatalogResource::collection($user->loads()->get());
     }
 
     //пользователь может редактированить свои данные
