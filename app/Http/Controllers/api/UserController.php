@@ -5,13 +5,16 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CatalogResource;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\ProfileShortResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Models\UserFavorite;
 use App\Models\UserFriend;
 use App\Models\UserInstall;
+use App\Models\UserLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\Return_;
 
 class UserController extends Controller
 {
@@ -23,6 +26,7 @@ class UserController extends Controller
 
     public function append(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'friend_id' => 'required|integer|unique:user_friends,friend_id|exists:users,id',
         ]);
@@ -54,8 +58,10 @@ class UserController extends Controller
     {
 
         return $request->user()->id ? [
+            'id' => $request->user()->id,
             'status' => 'true'
         ] : [
+            'id' => $request->user()->id,
             'status' => 'false'
         ];
     }
@@ -67,7 +73,14 @@ class UserController extends Controller
 
     public function profile(User $user)
     {
-        //return $user;
+        $user->users_likes = UserLike::query()->whereIn('post_id', $user->loads()->select('id'))->count();
+        return new ProfileShortResource($user);
+    }
+
+    public function information(Request $request, User $user)
+    {
+        $user->users_likes = UserLike::query()->whereIn('post_id', $user->loads()->select('id'))->count();
+        $user->getIsFriendAttribute($request->user()->friends()->count() > 0);
         return new ProfileResource($user);
     }
 

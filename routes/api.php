@@ -47,7 +47,7 @@ Route::get('/brands/{brand}', [BrandController::class, 'show']); // Отобра
 Route::get('/categories', [CategoryController::class, 'index']); // Отображение всех категорий
 Route::get('/categories/{category}', [CategoryController::class, 'show']); // Отображение одного
 
-Route::get('/user/{user}/profile', [UserController::class, 'profile']);
+Route::get('/user/{user}/profile', [UserController::class, 'profile']); // Сокращенная версия
 Route::get('/user/{user}/friends', [UserController::class, 'friends']);
 Route::get('/user/{user}/subs', [UserController::class, 'subscriptions']);
 Route::get('/user/{user}/loads', [UserController::class, 'loads']);
@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/token', [UserController::class, 'token']);
     Route::get('/user', [UserController::class, 'user']); //old
 
+    Route::get('/user/{user}/info', [UserController::class, 'information']);
     Route::post('/wallpapers/one/{post}', [PostController::class, 'update']); // Редактирование поста, изменение лайков, просмотров и т.д
 
     //Свой аккаунт
@@ -77,13 +78,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/wallpapers/load', [PostController::class, 'create']); // Создание новой темы
 
     //При этом, пользователь может редактировать только свои темы
-    Route::post('/wallpapers/load', [PostController::class, 'edit']); // Редактирование темы
+    Route::post('/wallpapers/edit', [PostController::class, 'edit']); // Редактирование темы
 
     //Тихое удаление, тема должна оставаться в базе данных, но при этом не отображаться
     Route::delete('/wallpapers/load', [PostController::class, 'destroy']); // Редактирование темы
 
-    Route::post('/user/{user}/add', [UserController::class, 'append']); // Добавить друга
-    Route::post('/user/{user}/remove', [UserController::class, 'remove']); // Удалить друга
+    Route::post('/user/add', [UserController::class, 'append']); // Добавить друга
+    Route::post('/user/remove', [UserController::class, 'remove']); // Удалить друга
 
     Route::post('/user/profile/edit', [UserController::class, 'update']); //Может редактировать профиль
 

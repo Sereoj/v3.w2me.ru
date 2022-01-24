@@ -27,7 +27,10 @@ class AuthenticationController extends Controller
                 $token = $user->createToken($user->name);
                 $user->setRememberToken($token->plainTextToken);
                 $user->save();
-                return ['token' => $token->plainTextToken];
+                return [
+                    'token' => $token->plainTextToken,
+                    'id' => $user->id,
+                ];
             }
         }
         return $validator->messages();
@@ -46,7 +49,10 @@ class AuthenticationController extends Controller
             $token = $user->createToken($user->name);
             $user->setRememberToken($token->plainTextToken);
             $user->save();
-            return ['token' => $token->plainTextToken];
+            return [
+                'token' => $token->plainTextToken,
+                'id' => $user->id,
+            ];
         }
         return $validator->messages();
     }

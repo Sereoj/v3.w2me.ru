@@ -142,16 +142,6 @@ class PostController extends Controller
     //Создание новой страницы
     public function create(ThemeRequest $request)
     {
-        //name
-        //slug
-        //description
-        //preview
-        //licence
-        //
-        //brand_id
-        //user_id
-        //download_link
-
         $user_id = $request->user()->id;
         $preview = $request->file('preview');
         Image::make($preview->getContent())->resize(3840, 2160)->save(public_path("storage/uploads/" . $preview->getClientOriginalName()));

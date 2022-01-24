@@ -132,6 +132,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->role === self::MEMBER;
     }
 
+    public function getUsersLikesAttribute($value)
+    {
+        return $value;
+    }
+
+    public function getIsFriendAttribute($value)
+    {
+        return $this;
+    }
+
     public function getIsHelperAttribute(): bool
     {
         return $this->role === self::HELPER;
